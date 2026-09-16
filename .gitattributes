@@ -1,0 +1,41 @@
+# ============================================================
+#  .gitattributes — 告诉 git 怎么处理各种文件
+#  这个文件比 .gitignore 更容易被忽略，但它能挡掉一大类
+#  "我这边好好的、你那边一堆改动"的诡异问题
+# ============================================================
+
+# ── 换行符统一 ─────────────────────────────────────────────
+# 统一按文本处理并写成 LF。Windows / macOS 互相协作时，
+# 如果不统一，git 会把整个文件算成"全改了"，diff 完全没法看
+* text=auto eol=lf
+
+# ── 明确点名文本文件（这些要用 diff 看改动）────────────────
+*.gd        text
+*.tscn      text
+*.tres      text
+*.godot     text
+*.cfg       text
+*.md        text
+*.json      text
+*.import    text
+
+# ── 二进制资源：不要换行转换，也不要尝试 diff ──────────────
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.webp      binary
+*.bmp       binary
+*.ttf       binary
+*.otf       binary
+*.wav       binary
+*.ogg       binary
+*.mp3       binary
+*.mp4       binary
+*.pck       binary
+
+# ── 场景/资源文件在 diff 里标成"生成物"，折叠起来不占位置 ──
+# （.tscn 是文本没错，但它由编辑器生成，改动通常是坐标微调，
+#   在 PR 里铺满几百行很挡视线）
+*.tscn      linguist-generated=true
+*.tres      linguist-generated=true
