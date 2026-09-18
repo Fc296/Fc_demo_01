@@ -20,7 +20,12 @@ GameData="*res://Autoload/game_data.gd"
 
 [display]
 
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=2560
+window/size/window_height_override=1440
 window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 
 [input]
 
@@ -63,8 +68,8 @@ toggle_inventory={
 [layer_names]
 
 2d_physics/layer_1="World"
-2d_physics/layer_2="PlayerHurtBox"
-2d_physics/layer_3="EnemyHurtBox"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Hitbox"
 2d_physics/layer_5="DropItem"
 

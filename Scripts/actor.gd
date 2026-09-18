@@ -22,13 +22,20 @@ class_name Actor
 ##     ├─ AnimSprite : AnimatedSprite2D   ← 名字固定，Actor 靠它播动画
 ##     ├─ Hitbox     : Area2D             ← 可选：NPC 没有攻击框就不放，代码里要判空
 ##     ├─ HurtBox    : Area2D             ← 被别人打的判定区
-##     └─ StateMachine : Node（挂 fsm.gd）← 子节点里放状态
+##     └─ FSM        : Node（挂 fsm.gd）   ← 子节点里放状态
 ##
 ## 状态机在 Actor 的 _ready 里启动，这样能保证 @onready 变量都已就绪才跑第一个状态。
 ##
+## ★ 待办（写 _ready 时务必做，就一行）：
+##   $FSM.actor = self
+##   原因见 fsm.gd 顶部："我是谁"不能靠猜场景根节点，要显式赋值。
+##
+## ★ 血量信号的归属：Actor 自己**不声明** health_changed，
+##   血变了直接 EventBus.health_changed.emit(self, cur, max)（带上是谁）。
+##   只有 Actor.died 这种"自己 → 自己的子类/订阅者"的一对一关系才留在这里。
+##
 ## ——— 接口清单 ———
-# signal health_changed(current: float, maximum: float)
-# signal died
+# signal died                                       # 一对一（自己 → 订阅者），留在本类
 #
 # @export var max_health: float = 10.0
 # @export var idle_state: StringName = &"idle"      # 受击/攻击结束后回到哪个状态（怪物常填 chase）
@@ -36,4 +43,4 @@ class_name Actor
 #
 # func face(dir_x: float) -> void                   # 转向：翻转贴图和攻击框位置
 # func play(anim: StringName) -> void                # 播动画，素材里没有的动画名直接忽略，不报错
-# func take_damage(amount: float, from_position := Vector2.ZERO) -> void
+# func take_damage(value: float, from_position := Vector2.ZERO) -> void

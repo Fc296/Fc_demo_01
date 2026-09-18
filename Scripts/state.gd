@@ -26,7 +26,7 @@ class_name State
 ##   而是让 move 状态里检测到攻击键就切到 attack —— 组合比分支好维护
 ##
 ## ——— 接口清单 ———
-# var machine: StateMachine
+# var machine: FSM
 # var actor: Actor
 # var msg: Dictionary = {}
 #

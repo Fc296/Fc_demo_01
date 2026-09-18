@@ -24,9 +24,9 @@ class_name Player
 ## ——— 接口清单 ———
 # const SPEED := 120.0
 # @onready var weapon_sprite: Sprite2D = $WeaponSprite
-# @onready var state_machine: StateMachine = $StateMachine
+# @onready var state_machine: FSM = $FSM
 #
 # func _physics_process(delta: float) -> void   # 输入 → velocity → 状态机切换
 # func attack() -> void                          # 鼠标左键：查冷却、播动画、生成判定
-# func gain_exp(amount: int) -> void             # 转发给 PlayerStats
+# func gain_exp(value: int) -> void              # 转发给 PlayerStats
 # func _on_animation_frame_changed() -> void     # 攻击动画播到判定帧才真正伤害，不要一按就掉血
