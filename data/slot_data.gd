@@ -21,11 +21,41 @@ class_name SlotData
 ## 铁律：SlotData 不认识 UI，也不认识"用掉之后会发生什么"。
 ##   它只回答"这一格放了什么、放了几个"。
 ##
-## ——— 接口清单（待实现，需要时把下面的注释打开）———
-# @export var item: ItemBase
-# @export var count: int = 1
-#
-# func is_empty() -> bool                            # count <= 0 或 item == null
-# func clear() -> void                               # 清空这一格（item = null, count = 0）
-# func to_dict() -> Dictionary                       # 存档：{"id": 物品id, "count": 数量}
-# static func from_dict(d: Dictionary) -> SlotData   # 读档：按 id 从物品表里还原 ItemBase
+## ——— 实现 ———
+@export var item: ItemBase
+@export var count: int = 1
+
+
+func _init(_item: ItemBase = null, _count: int = 1) -> void:
+	item = _item
+	count = _count
+
+
+func is_empty() -> bool:
+	return item == null or count <= 0
+
+
+func clear() -> void:
+	item = null
+	count = 0
+
+
+func to_dict() -> Dictionary:
+	# 存档只存 id + 数量：存整个 Resource 的话，版本一变（改字段、换脚本）旧档就崩
+	if item == null:
+		return {}                       # 空格子不写进存档（读档时也是 null，两边约定一致）
+	return {"id": String(item.id), "count": count}
+
+
+static func from_dict(data: Dictionary, item_db: Array[ItemBase]) -> SlotData:
+	# 读档：拿 id 去物品表里换回 ItemBase，再装箱。
+	# ★ 为什么要传 item_db 进来，而不是在这里调 GameData.find_item()：
+	#   数据层是整栋楼的最底层（只能被别人认识），让它反过来依赖 Autoload，
+	#   数据就变得"必须开着游戏才能测"，分层也就白做了。
+	#   调用方（存档系统）手里本来就有 GameData，多传一个参数而已。
+	var wanted := StringName(data.get("id", ""))
+	for entry in item_db:
+		if entry != null and entry.id == wanted:
+			return SlotData.new(entry, int(data.get("count", 1)))
+	push_warning("读档失败：找不到物品 id = %s（物品表里没有它）" % wanted)
+	return null

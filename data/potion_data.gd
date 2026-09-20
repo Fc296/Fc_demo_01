@@ -18,7 +18,15 @@ class_name PotionData
 ##   4. 效果成功执行后，才从背包扣掉 1 个
 ##   —— 先扣物品后执行效果，中间一旦出错（比如血量已满不该扣）就会出现"药没了血没加"
 ##
-## ——— 接口清单 ———
-# @export var value: float = 20.0        # 命名约定：一次动作的"量"统一叫 value（见 event_bus.gd）
-# @export var duration: float = 0.0     # 0 = 立即回复；>0 = 持续回复的秒数
-# @export var consume_sound: AudioStream
+## ——— 实现 ———
+@export var value: float = 20.0          # 命名约定：一次动作的"量"统一叫 value（见 event_bus.gd）
+@export var duration: float = 0.0        # 0 = 立即回复；>0 = 持续回复的秒数
+@export var consume_sound: AudioStream   # 按需：喝下去的音效，没有也能跑
+
+
+func _init() -> void:
+	# 子类默认值写在 _init 里（照 my-01 的做法）：
+	# 新建 .tres 时检查器里直接就是"消耗品、可叠 64 个"，
+	# 忘了改 type 也不会变成"材料"——材料是吃不了的，那种 bug 很隐蔽
+	type = ItemType.POTION
+	max_stack = 64

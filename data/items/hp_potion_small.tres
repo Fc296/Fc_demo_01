@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PotionData" format=3]
+
+[ext_resource type="Script" path="res://data/potion_data.gd" id="1_potion"]
+[ext_resource type="Texture2D" path="res://Sprites/Items/Potion/LifePot.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_potion")
+id = &"hp_potion"
+display_name = "小型回复药水"
+description = "回复 20 点生命。效果一般，胜在便宜。"
+icon = ExtResource("2_icon")
+max_stack = 64
+type = 1
+can_discard = true
+sell_price = 5
+value = 20.0
+duration = 0.0
