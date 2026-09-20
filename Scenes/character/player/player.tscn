@@ -1,11 +1,11 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene format=3 uid="uid://c31ejscxsa4v5"]
 
-[ext_resource type="Script" path="res://Scenes/character/player/player.gd" id="1_player"]
-[ext_resource type="Script" path="res://Scripts/fsm.gd" id="2_fsm"]
-[ext_resource type="Script" path="res://Scenes/character/player/states/idle.gd" id="3_idle"]
-[ext_resource type="Script" path="res://Scenes/character/player/states/move.gd" id="4_move"]
-[ext_resource type="Texture2D" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Idle.png" id="5_idle_tex"]
-[ext_resource type="Texture2D" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Walk.png" id="6_walk_tex"]
+[ext_resource type="Script" uid="uid://2gy5tlt2g1iu" path="res://Scenes/character/player/player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://ck62kwddfrudv" path="res://Scripts/fsm.gd" id="2_fsm"]
+[ext_resource type="Script" uid="uid://4w8od7rg5nf3" path="res://Scenes/character/player/states/idle.gd" id="3_idle"]
+[ext_resource type="Script" uid="uid://d0t6n2bdurvuy" path="res://Scenes/character/player/states/move.gd" id="4_move"]
+[ext_resource type="Texture2D" uid="uid://cc0q6egjxfobw" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Idle.png" id="5_idle_tex"]
+[ext_resource type="Texture2D" uid="uid://bacld8ysircpa" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Walk.png" id="6_walk_tex"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_down"]
 atlas = ExtResource("5_idle_tex")
@@ -39,22 +39,6 @@ region = Rect2(0, 32, 16, 16)
 atlas = ExtResource("6_walk_tex")
 region = Rect2(0, 48, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_1"]
-atlas = ExtResource("6_walk_tex")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_2"]
-atlas = ExtResource("6_walk_tex")
-region = Rect2(16, 16, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_3"]
-atlas = ExtResource("6_walk_tex")
-region = Rect2(16, 32, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_4"]
-atlas = ExtResource("6_walk_tex")
-region = Rect2(16, 48, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_walk_left_1"]
 atlas = ExtResource("6_walk_tex")
 region = Rect2(32, 0, 16, 16)
@@ -86,6 +70,22 @@ region = Rect2(48, 32, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_walk_right_4"]
 atlas = ExtResource("6_walk_tex")
 region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_1"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_2"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_3"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_4"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_boy"]
 animations = [{
@@ -194,29 +194,29 @@ animations = [{
 radius = 6.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=262270502]
+position = Vector2(1, 0)
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("1_player")
 
-[node name="AnimSprite" type="AnimatedSprite2D" parent="."]
+[node name="AnimSprite" type="AnimatedSprite2D" parent="." unique_id=1441545675]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_boy")
 animation = &"idle_down"
 autoplay = "idle_down"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1535451514]
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1152930003]
 zoom = Vector2(3, 3)
 
-[node name="FSM" type="Node" parent="."]
+[node name="FSM" type="Node" parent="." unique_id=2017452111]
 script = ExtResource("2_fsm")
 
-[node name="idle" type="Node" parent="FSM"]
+[node name="idle" type="Node" parent="FSM" unique_id=1229348748]
 script = ExtResource("3_idle")
 
-[node name="move" type="Node" parent="FSM"]
+[node name="move" type="Node" parent="FSM" unique_id=32306265]
 script = ExtResource("4_move")
