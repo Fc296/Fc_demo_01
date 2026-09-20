@@ -56,9 +56,10 @@ extends Node
 ## 计划中的信号（按系统分组）：
 ##   物品/背包   item_added / item_removed
 ##   战斗        damage_dealt / actor_died
-##   角色        health_changed / stats_changed / leveled_up
+##   角色        health_changed / mana_changed / stats_changed / exp_changed / leveled_up / points_changed
 ##   经济        gold_changed
 ##   流程        game_saved / game_loaded
+##   提示        hint_requested（屏幕中上方一条短提示，例如"属性点不足"）
 ##
 ## ★ 多角色相关：凡是"某个人身上的数值变了"，参数里**必须带上是哪个人**。
 ##   不带的话，加第二只怪物时血条就会串（玩家受伤，怪物的血条也跟着掉）。
@@ -72,12 +73,17 @@ extends Node
 #   直接 connect 容器的 changed 信号。）
 #
 # signal health_changed(actor: Actor, current: float, maximum: float)
-# signal stats_changed
-# signal leveled_up(level: int)
+# signal mana_changed(actor: Actor, current: float, maximum: float)
+# signal stats_changed(actor: Actor)          # 只广播"谁的属性变了"，要值去问 Actor.get_stat()
+# signal exp_changed(actor: Actor, current: int, need: int)
+# signal leveled_up(actor: Actor, level: int)
+# signal points_changed(actor: Actor, remain: int)
 # signal skill_cast(skill: SkillData)          # 施放成功（扣完蓝、开完冷却）才发
 #
 # signal damage_dealt(target: Actor, value: float)
 # signal actor_died(actor: Actor)
+#
+# signal hint_requested(text: String)          # 谁想弹一句提示就调它（HUD 负责显示）
 #
 # signal gold_changed(current: int, change: int = 0)
 #        # current = 现在有多少（界面直接显示它，不用自己再算）

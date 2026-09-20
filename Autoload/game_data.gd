@@ -16,12 +16,17 @@ extends Node
 ##   什么都往全局塞，半年后它会变成一个人人不敢动的大杂烩。
 ##
 ## ★ 但它要"持有"那些必须活过换场景的数据对象（这是关键分工）：
-##     player_stats : PlayerStats      ← 金币 / 经验 / 装备加成
+##     player_stats : PlayerStats      ← 金币 / 等级经验 / 三围加点 / 装备加成 / 技能冷却
 ##     inventory    : InventoryData    ← 玩家背包
-##     equipment    : InventoryData    ← 装备栏（6 格容器）
+##     equipment    : InventoryData    ← 装备栏（**8 格容器**：第 0 格 = 头盔 …… 序号 = 部位枚举）
 ##     item_db      : Array[ItemBase]  ← 物品表：id → 物品，读档和掉落表都要用它
 ##   这些对象本身是 Resource（纯数据），存在这儿才不会跟着玩家节点一起被销毁。
 ##   注意：持有 ≠ 往里塞逻辑。GameData 只负责"我记得它们"，业务逻辑还在各自类里。
+##
+## ★ 装备栏为什么是"8 格容器"而不是一个字典：
+##   容器能被拖拽系统直接复用（和背包同一套 Slot / filter），
+##   而"第几格是哪个部位"直接用**部位枚举的序号**当索引 —— 不用再维护一张映射表。
+##   铁律：枚举顺序 = 格子顺序；改顺序等于改存档格式，要加部位只能往后追加。
 ##
 ## ★ player 引用要用"注册 / 注销"，不要手动赋值：
 ##   玩家节点的生命周期和场景绑定，换地图时旧节点会被销毁，
@@ -47,7 +52,7 @@ extends Node
 # var player: Actor                       # 当前玩家节点（只由 register/unregister 改）
 # var player_stats: PlayerStats           # 金币 / 经验 / 装备加成，活过换场景
 # var inventory: InventoryData            # 玩家背包
-# var equipment: InventoryData            # 装备栏
+# var equipment: InventoryData            # 装备栏：8 格，序号 = EquipmentData.EquipType 的序号
 # var item_db: Array[ItemBase] = []       # 物品表（编辑器里把 .tres 拖进来），按 id 查
 # var unlocked_skills: Array[StringName] = []
 # var play_time: float = 0.0              # 从开局到现在累计的秒数（按 _process 累加）
@@ -56,6 +61,8 @@ extends Node
 # func unregister_player(who: Actor) -> void   # 玩家在 _exit_tree 里调
 # func get_player() -> Actor                   # 包一层 + is_instance_valid() 兜底
 # func find_item(id: StringName) -> ItemBase   # 读档 / 掉落表 / 合成配方都靠它
+# func setup_new_game() -> void            # 开新档：new 出 player_stats / inventory / equipment，
+#                                          # 并调 player_stats.setup(equipment) 把容器接给它
 # func reset() -> void                    # 重新开局：把上面的值全部恢复默认
 # func save_to_slot(slot: int) -> void
 # func load_from_slot(slot: int) -> void
