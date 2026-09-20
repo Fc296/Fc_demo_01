@@ -1,0 +1,222 @@
+[gd_scene load_steps=29 format=3]
+
+[ext_resource type="Script" path="res://Scenes/character/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://Scripts/fsm.gd" id="2_fsm"]
+[ext_resource type="Script" path="res://Scenes/character/player/states/idle.gd" id="3_idle"]
+[ext_resource type="Script" path="res://Scenes/character/player/states/move.gd" id="4_move"]
+[ext_resource type="Texture2D" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Idle.png" id="5_idle_tex"]
+[ext_resource type="Texture2D" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Walk.png" id="6_walk_tex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_down"]
+atlas = ExtResource("5_idle_tex")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_left"]
+atlas = ExtResource("5_idle_tex")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_right"]
+atlas = ExtResource("5_idle_tex")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle_up"]
+atlas = ExtResource("5_idle_tex")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_down_1"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_down_2"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_down_3"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_down_4"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_1"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_2"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_3"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_up_4"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_left_1"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_left_2"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_left_3"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_left_4"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_right_1"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_right_2"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_right_3"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_walk_right_4"]
+atlas = ExtResource("6_walk_tex")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_boy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_down")
+}],
+"loop": 1,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_left")
+}],
+"loop": 1,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_right")
+}],
+"loop": 1,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle_up")
+}],
+"loop": 1,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_down_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_down_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_down_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_down_4")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_left_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_left_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_left_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_left_4")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_right_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_right_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_right_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_right_4")
+}],
+"loop": 1,
+"name": &"walk_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_up_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_up_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_up_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_walk_up_4")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 6.0
+height = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="AnimSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_boy")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource("2_fsm")
+
+[node name="idle" type="Node" parent="FSM"]
+script = ExtResource("3_idle")
+
+[node name="move" type="Node" parent="FSM"]
+script = ExtResource("4_move")
