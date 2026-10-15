@@ -290,6 +290,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpyxu"]
+radius = 2.0
+height = 10.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 6.0
 height = 12.0
@@ -298,9 +302,9 @@ height = 12.0
 radius = 7.0
 height = 16.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpyxu"]
-radius = 2.0
-height = 10.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tv3u3"]
+radius = 6.0
+height = 16.0
 
 [node name="Player" type="CharacterBody2D" unique_id=262270502]
 collision_layer = 2
@@ -315,12 +319,20 @@ sprite_frames = SubResource("SpriteFrames_boy")
 animation = &"idle_down"
 autoplay = "idle_down"
 
-[node name="HandPivot" type="Node2D" parent="."]
+[node name="HandPivot" type="Node2D" parent="." unique_id=162622573]
 unique_name_in_owner = true
 
 [node name="WeaponSprite" type="Sprite2D" parent="HandPivot" unique_id=1818097886]
 unique_name_in_owner = true
 z_index = 1
+
+[node name="HitBox" type="Area2D" parent="HandPivot" unique_id=107295309]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandPivot/HitBox" unique_id=116324633]
+shape = SubResource("CapsuleShape2D_kpyxu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1535451514]
 visible = false
@@ -355,10 +367,6 @@ collision_mask = 0
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_0e3nr")
 
-[node name="HitBox" type="Area2D" parent="HandPivot" unique_id=107295309]
-unique_name_in_owner = true
-collision_layer = 8
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HandPivot/HitBox" unique_id=116324633]
-shape = SubResource("CapsuleShape2D_kpyxu")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=297966925]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_tv3u3")

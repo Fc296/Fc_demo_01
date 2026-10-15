@@ -26,6 +26,8 @@ signal died                                        # 一对一，留在本类
 @export var base_resist_wind: float = 0.0
 @export var base_damage_reduction: float = 0.0
 @export var base_hit_offset: Vector2 = Vector2(0, 0)   # 判定框往前伸多远（下=0 约定）。故意默认 0：漏填的怪判定框会盖在身上，一眼看得出
+## 这只角色"攻击打到第几帧"（0 = 抬手那一帧）。怪在检查器里调；玩家用不到（玩家的前摇由武器给）
+@export_range(0, 8, 1) var base_attack_hit_frame: int = 1
 @export var two_way_body: bool = false       # true = 身体只有左右两套帧（玩家）；怪还是四方向
 
 ## ── 运行期状态 ──
@@ -261,5 +263,30 @@ func apply_knockback(from_pos: Vector2, distance: float) -> void:
 	var t := create_tween()
 	t.tween_property(self, "position", position + dir * distance, 0.1)
 
+
+# 当前正在播的动画一共多少秒（循环动画 = 跑完一圈的长度）
+func anim_length(anim_name: StringName = &"") -> float:
+	var sf := anim_sprite.sprite_frames
+	var key := anim_name if anim_name != &"" else anim_sprite.animation
+	if sf == null or not sf.has_animation(key):
+		return 0.0
+	var total := 0.0
+	for i in sf.get_frame_count(key):
+		total += sf.get_frame_duration(key, i)
+	return total / maxf(sf.get_animation_speed(key), 0.001)
+
+
+## 这个动画"第 index 帧"从第几秒开始（index 从 0 数；传超过帧数的值 = 整个动画的长度）
+func anim_frame_start(index: int, anim_name: StringName = &"") -> float:
+	var sf := anim_sprite.sprite_frames
+	var key := anim_name if anim_name != &"" else anim_sprite.animation
+	if sf == null or not sf.has_animation(key):
+		return 0.0
+	var speed := maxf(sf.get_animation_speed(key), 0.001)
+	var n := clampi(index, 0, sf.get_frame_count(key))   # 夹一次：for 就只会累加前 n 帧
+	var total := 0.0
+	for i in n:
+		total += sf.get_frame_duration(key, i)
+	return total / speed
 
 # func _on_stats_changed(actor: Actor) -> void        # 升级/加点/换装后重算上限

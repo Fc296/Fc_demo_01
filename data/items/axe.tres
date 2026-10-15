@@ -10,12 +10,11 @@ height = 12.0
 [resource]
 script = ExtResource("2_t363m")
 hit_shape = SubResource("CapsuleShape2D_74bhg")
-hit_offset = Vector2(0, 9)
 hit_angle = 1.57
 hit_time = 0.12
 recover_time = 0.3
 move_scale_while_attack = 0.2
-element = 3
+element = 2
 element_amount = 5.0
 knockback = 12.0
 hold_texture = ExtResource("1_74bhg")

@@ -46,6 +46,10 @@ func enter_state(msg_in: Dictionary = {}) -> void:
 		actor.play_anim(&"walk" if not dir.is_zero_approx() else &"idle")
 	else:
 		actor.play_anim(&"attack")        # 怪只有 chase_*/attack_* 这些帧，必须走这条
+		var len := actor.anim_length()
+		if len > 0.0:
+			_recover_time = len
+		_hit_time = actor.anim_frame_start(actor.base_attack_hit_frame)
 	# ④ 让武器"挥"起来（玩家才有武器）
 	_swing_weapon(aim)
 

@@ -5,19 +5,23 @@ var lose_timer: float = 0.0   # 跟丢计时
 
 func enter_state(msg_in: Dictionary = {}) -> void:
 	super(msg_in)
+	var e := actor as Enemy
+	e.lock_attack()                    # 刚挥完 → 喘气开始
 	lose_timer = 0.0  # 进入追击状态重置跟丢计时器
 
 
 func physics_update(delta: float) -> void:
 	var e : Enemy = actor
 	var dist = e.distance_to_player()
-
-	# 分支1：已经进入攻击距离 → 切attack
-	if dist <= e.attack_range:
+	if dist <= e.attack_range and e.can_attack():
 		fsm.transition_to("attack")
 		return
+	if dist <= e.attack_range:
+		e.velocity = Vector2.ZERO      # 喘气中：站着不动，让玩家看得出有空档
+		e.play_anim(&"idle")
+		return
 
-	# 分支2：目标超出探测范围，开始累计跟丢时间
+	#目标超出探测范围，开始累计跟丢时间
 	if dist > e.detect_range:
 		lose_timer += delta
 		if lose_timer >= e.lose_sight_time:

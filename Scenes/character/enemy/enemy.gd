@@ -10,11 +10,23 @@ class_name Enemy
 @export var attack_range: float = 24.0      # 多近开始打
 @export var lose_sight_time: float = 2.0    # 丢失目标后放弃追击的秒数
 @export var loot_table: LootTable
+@export_range(0.0, 3.0, 0.05) var attack_rest: float = 0.4   # 挥完动画后还要喘多久
+
+var _next_attack_at: int = 0                                  # 毫秒时间戳
 
 
 func _ready() -> void:
 	super()
 	died.connect(_on_died)
+
+
+func can_attack() -> bool:
+	return Time.get_ticks_msec() >= _next_attack_at
+
+
+
+func lock_attack() -> void:
+	_next_attack_at = Time.get_ticks_msec() + int(attack_rest * 1000.0)
 
 
 func distance_to_player() -> float:

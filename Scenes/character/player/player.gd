@@ -12,6 +12,7 @@ class_name Player
 # @onready var state_machine: FSM = $FSM
 @onready var weapon_sprite: Sprite2D = %WeaponSprite
 @onready var hand_pivot: Node2D = %HandPivot
+@export var hold_orbit := Vector2(9.0, 6.0)   # 武器绕角色转的椭圆：x = 左右半轴，y = 上下半轴
 
 var spawn_pos: Vector2 = Vector2.ZERO      # 出生点，复活用
 var weapon_locked := false
@@ -42,15 +43,15 @@ func _process(delta: float) -> void:
 	else:
 		weapon_sprite.hide()                       # 空手：只藏贴图；"手"照旧跟着鼠标转（判定框挂在它下面）
 
-	if weapon_locked:
-		return                                     # 挥砍期间角度交给 attack 状态，别抢
-
-	# 鼠标 → 世界方向 → "下=0"的攻击角。全工程只换算这一次
-	var aim := Actor.aim_angle(get_global_mouse_position() - global_position)
-	# 转的是"手"，不是贴图：贴图和判定框都挂在它下面，所以两者永远同一个角度
-	hand_pivot.rotation = lerp_angle(hand_pivot.rotation, aim, 0.35)
-	# 左半边（含正左）竖直翻转贴图：不翻的话，180° 的旋转看着就是"上下颠倒"
-	weapon_sprite.flip_h = sin(aim) > 0.0
+	if not weapon_locked:
+		var aim := Actor.aim_angle(get_global_mouse_position() - global_position)
+		hand_pivot.rotation = lerp_angle(hand_pivot.rotation, aim, 0.35)
+		weapon_sprite.flip_h = sin(aim) > 0.0
+	# ↓ 挥砍和平时都要更新：位置跟随"手"的实际角度，前后关系也一样
+	var dir := Actor.aim_vector(hand_pivot.rotation)
+	var orbit := Vector2(dir.x * hold_orbit.x, dir.y * hold_orbit.y)
+	weapon_sprite.position = orbit.rotated(-hand_pivot.rotation)
+	weapon_sprite.z_index = -1 if dir.y < -0.1 else 1
 
 
 func _apply_saved_position() -> void:      # 读档后：站回存档点

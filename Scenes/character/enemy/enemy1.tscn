@@ -420,7 +420,7 @@ base_max_health = 1000.0
 base_move_speed = 50.0
 base_attack = 6.0
 element = 3
-base_resist_rock = 100.0
+base_resist_rock = 99.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1133326029]
 shape = SubResource("CapsuleShape2D_v3rjt")
@@ -428,7 +428,6 @@ shape = SubResource("CapsuleShape2D_v3rjt")
 [node name="AnimSprite" type="AnimatedSprite2D" parent="." unique_id=1443209748]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_jd3c0")
-animation = &"idle_down"
 autoplay = "idle_down"
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=713329682]
