@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://n67u1n0p1ta8"]
+
+[ext_resource type="Script" uid="uid://ccxd3jl0ygpkd" path="res://ui/common/slot.gd" id="1_ch6nt"]
+[ext_resource type="Texture2D" uid="uid://dpvxvyyuq42xe" path="res://Sprites/Ui/Theme/Theme Wood/inventory_cell.png" id="1_iuuu4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ch6nt"]
+texture = ExtResource("1_iuuu4")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_dkn6l"]
+font_size = 10
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Slot" type="Panel" unique_id=1071661853]
+custom_minimum_size = Vector2(30, 30)
+offset_right = 30.0
+offset_bottom = 30.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_ch6nt")
+script = ExtResource("1_ch6nt")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1113936273]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -9.0
+offset_right = 9.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Count" type="Label" parent="." unique_id=1408302631]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_dkn6l")
+horizontal_alignment = 2
+vertical_alignment = 2

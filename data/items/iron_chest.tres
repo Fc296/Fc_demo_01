@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EquipmentData" format=3 uid="uid://bris87elpmiil"]
+
+[ext_resource type="Texture2D" uid="uid://bxc65sl2ptpg3" path="res://Sprites/armor-sheet.png" id="1_87214"]
+[ext_resource type="Script" uid="uid://7t4opwrwj7k" path="res://data/equipment_data.gd" id="2_nvloi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y7ny"]
+atlas = ExtResource("1_87214")
+region = Rect2(4, 6, 24, 20)
+
+[resource]
+script = ExtResource("2_nvloi")
+equip_type = 1
+required_strength = 5
+required_agility = 5
+required_intelligence = 5
+bonus_max_hp = 50.0
+bonus_defense = 20.0
+bonus_damage_reduction = 5.0
+id = &"iron_chest"
+display_name = "铁甲"
+icon = SubResource("AtlasTexture_4y7ny")
+type = 3
+sell_price = 5
+metadata/_custom_type_script = "uid://7t4opwrwj7k"

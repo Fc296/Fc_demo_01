@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://gvruocty1o0x"]
+
+[ext_resource type="Script" uid="uid://c3iy3ncex0x8t" path="res://ui/common/menu_button.gd" id="1_m7opt"]
+[ext_resource type="Texture2D" uid="uid://dyglk4g6ry4xa" path="res://Sprites/Ui/Theme/Wip/ThemeBamboo/nine_path_panel.png" id="1_ugdqw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m7opt"]
+texture = ExtResource("1_ugdqw")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[node name="MenuButton" type="Button" unique_id=1175670833]
+custom_minimum_size = Vector2(36, 36)
+theme_override_styles/normal = SubResource("StyleBoxTexture_m7opt")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m7opt")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m7opt")
+icon_alignment = 1
+script = ExtResource("1_m7opt")

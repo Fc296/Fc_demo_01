@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://idq3emfsn5nf"]
+
+[ext_resource type="Script" uid="uid://srr4yfmggfjj" path="res://ui/panels/craft/craft_panel.gd" id="1_87o36"]
+[ext_resource type="PackedScene" uid="uid://d0wbsgbymykye" path="res://ui/common/panel_header.tscn" id="4_x5q0a"]
+
+[node name="CraftPanel" type="PanelContainer" unique_id=768032468 node_paths=PackedStringArray("header")]
+script = ExtResource("1_87o36")
+header = NodePath("MarginContainer/VBoxContainer/PanelHeader")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1352322453]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1489480333]
+layout_mode = 2
+
+[node name="PanelHeader" parent="MarginContainer/VBoxContainer" unique_id=744083921 instance=ExtResource("4_x5q0a")]
+layout_mode = 2
+
+[node name="RecipeList" type="ItemList" parent="MarginContainer/VBoxContainer" unique_id=1136321844]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1609294220]
+layout_mode = 2
+
+[node name="NeedLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=881176181]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CraftButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=835522723]
+unique_name_in_owner = true
+layout_mode = 2
+text = "打造"

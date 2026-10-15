@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://dgov4tc5n041"]
+
+[ext_resource type="Texture2D" uid="uid://scblm6c0to8r" path="res://Sprites/Actor/Monsters/Bear/bear_claw.png" id="1_8awq7"]
+[ext_resource type="Script" uid="uid://ctjk1xewro7wv" path="res://data/item_base.gd" id="1_wwqn8"]
+
+[resource]
+script = ExtResource("1_wwqn8")
+id = &"bear_claw"
+display_name = "一般的熊爪"
+icon = ExtResource("1_8awq7")
+max_stack = 99
+sell_price = 5
+metadata/_custom_type_script = "uid://ctjk1xewro7wv"

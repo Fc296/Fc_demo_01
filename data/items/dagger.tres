@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://csylh0ilseydo"]
+
+[ext_resource type="Texture2D" uid="uid://b5oevb1lcm4j7" path="res://Sprites/Items/Weapons/Katana/Sprite.png" id="1_jpf71"]
+[ext_resource type="Script" uid="uid://x64qxh5a5q73" path="res://data/weapon_data.gd" id="2_25ttc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oepfd"]
+radius = 3.0
+height = 10.0
+
+[resource]
+script = ExtResource("2_25ttc")
+hit_shape = SubResource("CapsuleShape2D_oepfd")
+hit_offset = Vector2(0, 9)
+hit_time = 0.04
+recover_time = 0.12
+move_scale_while_attack = 0.8
+element = 3
+element_amount = 3.0
+knockback = 3.0
+hold_texture = ExtResource("1_jpf71")
+equip_type = 8
+bonus_damage = 5.0
+bonus_health_regen = 2.0
+id = &"dagger"
+display_name = "匕首"
+icon = ExtResource("1_jpf71")
+type = 2
+metadata/_custom_type_script = "uid://x64qxh5a5q73"

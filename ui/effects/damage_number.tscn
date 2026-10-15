@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bwywixiuh31r"]
+
+[ext_resource type="Script" uid="uid://ykrbhs2mw4j1" path="res://ui/effects/damage_number.gd" id="1_1tj5j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tsbgc"]
+font_size = 10
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="DamageNumber" type="Label" unique_id=1415497804]
+custom_minimum_size = Vector2(60, 16)
+label_settings = SubResource("LabelSettings_tsbgc")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_1tj5j")

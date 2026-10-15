@@ -6,12 +6,60 @@ class_name DropItem
 ## 它不认识"物品怎么用"。完整说明见《脚本说明.md》→ Scenes/drop_item/drop_item.gd
 
 ## ——— 接口清单（待实现）———
-# signal picked_up(item: ItemBase, count: int)
-#
-# @export var item: ItemBase
-# @export var count: int = 1
-# @export var pickup_delay: float = 0.4          # 出生后多久才允许被捡
-# @onready var sprite: Sprite2D = $Sprite2D
-#
-# func setup(new_item: ItemBase, new_count := 1) -> void   # 由 spawner 调用
-# func _on_body_entered(body: Node2D) -> void              # 判定是不是能捡的人（玩家）
+signal picked_up(item: ItemBase, count: int)
+
+@export var item: ItemBase
+@export var count: int = 1
+@export var pickup_delay: float = 0.4          # 出生后多久才允许被捡
+@export var scatter_radius: float = 12.0      # 出生时往四周撒开多远（检查器里调）
+
+@onready var sprite: Sprite2D = $Sprite2D
+
+var _age: float = 0.0
+
+
+func _process(delta: float) -> void:
+	_age += delta
+	# 窗口一过就主动查一次：如果出生时玩家就压在圈里，
+	# body_entered 早就发过了，不会再发第二次
+	if _age >= pickup_delay:
+		set_process(false)              # 只查一次，查完就别再跑 _process 了
+		for body in get_overlapping_bodies():
+			var a := body as Actor
+			if a != null and a.is_player():
+				_try_pick()
+				break
+
+
+# 由 spawner 调用
+func setup(new_item: ItemBase, new_count: int = 1) -> void:
+	item = new_item
+	count = new_count
+	if item != null and item.icon != null:
+		sprite.texture = item.icon
+
+# 判定是不是能捡的人（玩家）
+func _on_body_entered(body: Node2D) -> void:
+	if _age < pickup_delay:
+		return
+	var a := body as Actor
+	if a == null or not a.is_player():   # 只有玩家能捡
+		return
+	_try_pick()
+
+
+func _try_pick() -> void:
+	var bag := GameData.inventory
+	if bag == null:
+		return
+	if bag.add_item(item, count) == 0:   # 装得下才消失（铁律）
+		picked_up.emit(item, count)
+		print("捡到 ", item.display_name, " x", count)
+		queue_free()
+	# 装不下：留在原地等玩家腾格子
+
+
+## 让"我"从落点撒开一点，避免几个掉落物叠在同一个像素上
+func scatter() -> void:
+	global_position += Vector2(randf_range(-scatter_radius, scatter_radius),
+							   randf_range(-scatter_radius, scatter_radius))

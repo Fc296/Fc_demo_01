@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LootEntry" format=3 uid="uid://p0bu36qvdbfy"]
+
+[ext_resource type="Resource" uid="uid://cmalsvsn2vbe5" path="res://data/items/axe.tres" id="1_2fii8"]
+[ext_resource type="Script" uid="uid://d1xs5x8ss0jdh" path="res://data/loot_entry.gd" id="1_4m5pi"]
+
+[resource]
+script = ExtResource("1_4m5pi")
+item = ExtResource("1_2fii8")
+metadata/_custom_type_script = "uid://d1xs5x8ss0jdh"

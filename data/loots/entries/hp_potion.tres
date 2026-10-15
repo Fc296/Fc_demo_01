@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LootEntry" format=3 uid="uid://dg1aosmhkl8v1"]
+
+[ext_resource type="Resource" uid="uid://crekfghyqltfu" path="res://data/items/hp_potion_small.tres" id="1_d4nga"]
+[ext_resource type="Script" uid="uid://d1xs5x8ss0jdh" path="res://data/loot_entry.gd" id="2_avbf4"]
+
+[resource]
+script = ExtResource("2_avbf4")
+item = ExtResource("1_d4nga")
+chance = 0.8
+min_count = 3
+max_count = 7
+metadata/_custom_type_script = "uid://d1xs5x8ss0jdh"

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bu033i57ylhxd"]
+
+[ext_resource type="Script" uid="uid://credhg87ayqpq" path="res://Autoload/game_data.gd" id="1_dowxm"]
+[ext_resource type="Script" uid="uid://ctjk1xewro7wv" path="res://data/item_base.gd" id="2_g28mu"]
+[ext_resource type="Resource" uid="uid://dgov4tc5n041" path="res://data/items/bear_claw.tres" id="3_dgt5b"]
+[ext_resource type="Resource" uid="uid://crekfghyqltfu" path="res://data/items/hp_potion_small.tres" id="4_lrnbd"]
+[ext_resource type="Resource" uid="uid://bris87elpmiil" path="res://data/items/iron_chest.tres" id="5_dgt5b"]
+[ext_resource type="Resource" uid="uid://b5jtqajkiaiqc" path="res://data/items/iron_sword.tres" id="6_lrnbd"]
+[ext_resource type="Resource" uid="uid://plhy2yb373xn" path="res://data/items/iron.tres" id="7_igakw"]
+[ext_resource type="Resource" uid="uid://cm8yi7r3srnav" path="res://data/items/wood.tres" id="8_6onwa"]
+[ext_resource type="Resource" uid="uid://ohqrtqdo27tm" path="res://data/items/iron_shield.tres" id="9_6onwa"]
+[ext_resource type="Script" uid="uid://6p8u8p4ehgr1" path="res://data/recipe_data.gd" id="10_112v4"]
+[ext_resource type="Resource" uid="uid://csylh0ilseydo" path="res://data/items/dagger.tres" id="10_waslb"]
+[ext_resource type="Resource" uid="uid://cmalsvsn2vbe5" path="res://data/items/axe.tres" id="11_0ajxq"]
+[ext_resource type="Resource" uid="uid://cnxn33qybc5h6" path="res://data/recipes/iron_chest_recipe.tres" id="11_yby7t"]
+[ext_resource type="Resource" uid="uid://cgggx2vspxotq" path="res://data/recipes/iron_shield_recipe.tres" id="12_waslb"]
+[ext_resource type="Resource" uid="uid://bugi5wgb6epm7" path="res://data/recipes/iron_sword_recipe.tres" id="13_0ajxq"]
+
+[node name="GameData" type="Node" unique_id=1909667817]
+script = ExtResource("1_dowxm")
+item_db = Array[ExtResource("2_g28mu")]([ExtResource("3_dgt5b"), ExtResource("4_lrnbd"), ExtResource("5_dgt5b"), ExtResource("6_lrnbd"), ExtResource("7_igakw"), ExtResource("8_6onwa"), ExtResource("9_6onwa"), ExtResource("10_waslb"), ExtResource("11_0ajxq")])
+recipe_db = Array[ExtResource("10_112v4")]([ExtResource("11_yby7t"), ExtResource("12_waslb"), ExtResource("13_0ajxq")])

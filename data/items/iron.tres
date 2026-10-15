@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://plhy2yb373xn"]
+
+[ext_resource type="Script" uid="uid://ctjk1xewro7wv" path="res://data/item_base.gd" id="1_87keo"]
+[ext_resource type="Texture2D" uid="uid://dlppo7yhpe5ye" path="res://Sprites/Items/Resource/BarIron.png" id="1_g53nd"]
+
+[resource]
+script = ExtResource("1_87keo")
+id = &"iron"
+display_name = "铁块"
+icon = ExtResource("1_g53nd")
+max_stack = 99
+sell_price = 10
+metadata/_custom_type_script = "uid://ctjk1xewro7wv"

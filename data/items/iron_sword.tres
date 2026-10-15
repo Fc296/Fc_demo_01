@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://b5jtqajkiaiqc"]
+
+[ext_resource type="Texture2D" uid="uid://dqknhyxgepeom" path="res://Sprites/Items/Weapons/Sword2/Sprite.png" id="1_d3ohw"]
+[ext_resource type="Texture2D" uid="uid://bupam7vv54sus" path="res://Sprites/Items/Weapons/BigSword/Sprite.png" id="1_fe1x0"]
+[ext_resource type="Script" uid="uid://x64qxh5a5q73" path="res://data/weapon_data.gd" id="2_d3ohw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fe1x0"]
+radius = 3.0
+height = 12.0
+
+[resource]
+script = ExtResource("2_d3ohw")
+hit_shape = SubResource("CapsuleShape2D_fe1x0")
+hit_offset = Vector2(0, 9)
+hold_texture = ExtResource("1_fe1x0")
+equip_type = 8
+required_strength = 5
+required_agility = 5
+required_intelligence = 5
+bonus_damage = 10.0
+id = &"iron_sword"
+display_name = "铁剑"
+icon = ExtResource("1_d3ohw")
+type = 2
+sell_price = 5
+metadata/_custom_type_script = "uid://7t4opwrwj7k"

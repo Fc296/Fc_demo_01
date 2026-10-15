@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LootEntry" format=3 uid="uid://bbrl2unlsqynp"]
+
+[ext_resource type="Script" uid="uid://d1xs5x8ss0jdh" path="res://data/loot_entry.gd" id="1_78r6r"]
+[ext_resource type="Resource" uid="uid://dgov4tc5n041" path="res://data/items/bear_claw.tres" id="1_xj8df"]
+
+[resource]
+script = ExtResource("1_78r6r")
+item = ExtResource("1_xj8df")
+chance = 0.5
+min_count = 0
+metadata/_custom_type_script = "uid://d1xs5x8ss0jdh"

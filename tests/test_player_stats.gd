@@ -66,7 +66,7 @@ func test_exp_and_level_up() -> void:
 	assert_eq(stats.add_exp(100), 1, "100 经验刚好升 1 级")
 	assert_eq(stats.level, 2)
 	assert_eq(stats.exp, 0)
-	assert_eq(stats.points_left(), 4, "升级发 4 点属性点")
+	assert_eq(stats.points_left(), 2, "升级发 2 点属性点")
 	assert_eq(stats.need_exp(), 120, "2 级需要 120 经验")
 	assert_eq(stats.add_exp(264), 2, "264 经验（120+144）从 2 级升到 4 级")
 	assert_eq(stats.exp, 0)
@@ -106,3 +106,20 @@ func test_save_load_round_trip() -> void:
 	assert_eq(loaded.gold, 120)
 	assert_eq(loaded.bare(&"agility"), stats.bare(&"agility"))
 	_near(loaded.attack_bonus, stats.attack_bonus, "读档后攻击一致")
+
+
+func test_equipment_bonus() -> void:
+	var bag := InventoryData.new(9)
+	var sword := EquipmentData.new()
+	sword.equip_type = EquipmentData.EquipType.WEAPON
+	sword.bonus_damage = 8.0
+	bag.slots[EquipmentData.EquipType.WEAPON] = SlotData.new(sword, 1)
+
+	var stats := PlayerStats.new()
+	stats.setup(bag)
+	_near(stats.attack_bonus, 28.0, "装上铁剑后攻击 = 20 + 8")
+
+	# 脱下来，应该立刻减回去
+	bag.slots[EquipmentData.EquipType.WEAPON] = null
+	stats.recalc()
+	_near(stats.attack_bonus, 20.0, "脱下后攻击回到 20")

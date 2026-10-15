@@ -6,12 +6,13 @@ class_name SkillData
 ## 生成判定、走冷却的行为节点。冷却的"还剩几秒"不写回这里（会被多个角色共享）——放 PlayerStats。
 ## 详见《脚本说明.md》→ data/skill_data.gd
 
-@export var mana_cost: float = 0.0
-@export var cooldown: float = 3.0
-@export var damage: float = 0.0
-@export var projectile_scene: PackedScene     # 远程技能用；近战留空
+@export var mana_cost: float = 0.0              # 放一次消耗多少蓝
+@export var cooldown: float = 3.0               # 两次施放之间要等几秒
+@export var damage: float = 0.0                 # 技能伤害
+@export var projectile_scene: PackedScene      # 远程技能的弹道场景（.tscn）；近战留空
 
 
+#s
 func _init() -> void:
 	type = ItemType.SKILL
 	max_stack = 1

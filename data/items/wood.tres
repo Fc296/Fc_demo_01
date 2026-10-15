@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://cm8yi7r3srnav"]
+
+[ext_resource type="Texture2D" uid="uid://bt0cf4yyweycs" path="res://Sprites/FX/Particle/Wood.png" id="1_o7n0e"]
+[ext_resource type="Script" uid="uid://ctjk1xewro7wv" path="res://data/item_base.gd" id="1_y1jh1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7n0e"]
+atlas = ExtResource("1_o7n0e")
+region = Rect2(17, 2, 13, 13)
+
+[resource]
+script = ExtResource("1_y1jh1")
+id = &"wood"
+display_name = "木条"
+icon = SubResource("AtlasTexture_o7n0e")
+max_stack = 99
+sell_price = 5
+metadata/_custom_type_script = "uid://ctjk1xewro7wv"

@@ -1,23 +1,27 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://bfnp66hyboykf"]
 
-[ext_resource type="PackedScene" path="res://Scenes/character/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://c31ejscxsa4v5" path="res://Scenes/character/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://c1f72sjsct7bi" path="res://Scenes/spawner/enemy_spawner.tscn" id="3_dkn6l"]
+[ext_resource type="PackedScene" uid="uid://bhx4ifm4fm8pn" path="res://ui/game_ui.tscn" id="3_lfwg7"]
+[ext_resource type="PackedScene" uid="uid://e3dfrr2dkh4t" path="res://Scenes/character/enemy/enemy.tscn" id="4_dkn6l"]
+[ext_resource type="PackedScene" uid="uid://dgvg3swfwufrp" path="res://Scenes/character/enemy/enemy1.tscn" id="5_t7wb0"]
+[ext_resource type="PackedScene" uid="uid://dru7uy0va5po5" path="res://Scenes/props/chest.tscn" id="6_t7wb0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
-size = Vector2(320, 32)
+[node name="TestRoom" type="Node2D" unique_id=1662025268]
 
-[node name="TestRoom" type="Node2D"]
+[node name="Player" parent="." unique_id=520905283 instance=ExtResource("1_player")]
 
-[node name="Ground" type="StaticBody2D" parent="."]
-collision_layer = 1
-collision_mask = 0
+[node name="HUD" parent="." unique_id=934747633 instance=ExtResource("3_lfwg7")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
-position = Vector2(0, 16)
-shape = SubResource("RectangleShape2D_ground")
+[node name="EnemySpawner" parent="." unique_id=873686719 instance=ExtResource("3_dkn6l")]
+position = Vector2(-74, -49)
+enemy_scene = ExtResource("4_dkn6l")
 
-[node name="Visual" type="Polygon2D" parent="Ground"]
-color = Color(0.211765, 0.333333, 0.243137, 1)
-polygon = PackedVector2Array(-160, 0, 160, 0, 160, 32, -160, 32)
+[node name="EnemySpawner2" parent="." unique_id=337203632 instance=ExtResource("3_dkn6l")]
+position = Vector2(72, -49)
+enemy_scene = ExtResource("5_t7wb0")
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
-position = Vector2(0, 0)
+[node name="Chest" parent="." unique_id=352187325 instance=ExtResource("6_t7wb0")]
+position = Vector2(70, 44)
+
+[node name="Drops" type="Node2D" parent="." unique_id=1457961624]

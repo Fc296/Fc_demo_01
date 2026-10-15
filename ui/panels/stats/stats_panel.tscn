@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bdevgglj28xjl"]
+
+[ext_resource type="Script" uid="uid://c5ianj2rgmouf" path="res://ui/panels/stats/stats_panel.gd" id="1_jtgvv"]
+[ext_resource type="PackedScene" uid="uid://d0wbsgbymykye" path="res://ui/common/panel_header.tscn" id="2_c6v6d"]
+
+[node name="PanelContainer" type="PanelContainer" unique_id=2107678174 node_paths=PackedStringArray("header")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -43.0
+offset_right = 20.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jtgvv")
+header = NodePath("MarginContainer/VB/PanelHeader")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1539187059]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VB" type="VBoxContainer" parent="MarginContainer" unique_id=1247221123]
+layout_mode = 2
+
+[node name="PanelHeader" parent="MarginContainer/VB" unique_id=744083921 instance=ExtResource("2_c6v6d")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VB" unique_id=1049423527]
+layout_mode = 2
+
+[node name="HpLabel" type="Label" parent="MarginContainer/VB/VBoxContainer" unique_id=1884489041]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="MpLabel" type="Label" parent="MarginContainer/VB/VBoxContainer" unique_id=341521039]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="AttackLabel" type="Label" parent="MarginContainer/VB/VBoxContainer" unique_id=1692839119]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="DefenseLabel" type="Label" parent="MarginContainer/VB/VBoxContainer" unique_id=1314370850]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="SpeedLabel" type="Label" parent="MarginContainer/VB/VBoxContainer" unique_id=1419487410]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)

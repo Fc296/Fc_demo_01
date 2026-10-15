@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EquipmentData" format=3 uid="uid://ohqrtqdo27tm"]
+
+[ext_resource type="Script" uid="uid://7t4opwrwj7k" path="res://data/equipment_data.gd" id="1_1pr4n"]
+[ext_resource type="Texture2D" uid="uid://bxc65sl2ptpg3" path="res://Sprites/armor-sheet.png" id="1_dfnh6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfnh6"]
+atlas = ExtResource("1_dfnh6")
+region = Rect2(72, 6, 16, 22)
+
+[resource]
+script = ExtResource("1_1pr4n")
+equip_type = 7
+bonus_defense = 10.0
+bonus_move_speed = -5.0
+id = &"iron_shield"
+display_name = "铁盾"
+icon = SubResource("AtlasTexture_dfnh6")
+type = 3
+sell_price = 5
+metadata/_custom_type_script = "uid://7t4opwrwj7k"

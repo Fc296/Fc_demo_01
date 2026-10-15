@@ -10,7 +10,63 @@ class_name Player
 # const SPEED := 120.0
 # @onready var weapon_sprite: Sprite2D = $WeaponSprite
 # @onready var state_machine: FSM = $FSM
-#
+@onready var weapon_sprite: Sprite2D = %WeaponSprite
+@onready var hand_pivot: Node2D = %HandPivot
+
+var spawn_pos: Vector2 = Vector2.ZERO      # 出生点，复活用
+var weapon_locked := false
+
+
+func _ready() -> void:
+	spawn_pos = global_position            # 必须在 _apply_saved_position() 之前记！
+	add_to_group(&"player")          # 主角只此一只，用组标记身份
+	stats = GameData.player_stats
+	super()
+	died.connect(_on_died)
+	# 穿脱装备 → 上限变了 → 让血条重画（属性面板那边是自己连的，HUD 血条只能靠广播）
+	if GameData.equipment != null:
+		GameData.equipment.changed.connect(refresh_health)
+	_apply_saved_position()
+
+
+func _process(delta: float) -> void:
+	# Actor._process() 里是回血 / 回蓝。子类重写 _process 不会自动调父类，这一行必须有
+	super._process(delta)
+
+	var w := current_weapon()
+	if w != null and w.hold_texture != null:
+		weapon_sprite.texture = w.hold_texture
+		weapon_sprite.offset = Vector2(0, +w.hold_texture.get_height() / 2.0).rotated(w.hold_angle)
+		weapon_sprite.rotation = -w.hold_angle     # 贴图只负责把"天生朝向"补回来（图标朝上 → -PI）
+		weapon_sprite.show()
+	else:
+		weapon_sprite.hide()                       # 空手：只藏贴图；"手"照旧跟着鼠标转（判定框挂在它下面）
+
+	if weapon_locked:
+		return                                     # 挥砍期间角度交给 attack 状态，别抢
+
+	# 鼠标 → 世界方向 → "下=0"的攻击角。全工程只换算这一次
+	var aim := Actor.aim_angle(get_global_mouse_position() - global_position)
+	# 转的是"手"，不是贴图：贴图和判定框都挂在它下面，所以两者永远同一个角度
+	hand_pivot.rotation = lerp_angle(hand_pivot.rotation, aim, 0.35)
+	# 左半边（含正左）竖直翻转贴图：不翻的话，180° 的旋转看着就是"上下颠倒"
+	weapon_sprite.flip_h = sin(aim) > 0.0
+
+
+func _apply_saved_position() -> void:      # 读档后：站回存档点
+	if not GameData.has_pending_pos:
+		return
+	global_position = GameData.pending_player_pos
+	GameData.has_pending_pos = false       # 取走就清掉，否则下次换地图又会被摆一次
+	await get_tree().process_frame         # 等一帧，新的 HUD 才把信号接上
+	EventBus.on_hint_requested.emit("已读取存档")
+
+
+func _on_died() -> void:
+	fsm.transition_to(&"dead")
+
+
+
 # func _physics_process(delta: float) -> void   # 输入 → velocity → 状态机切换
 # func attack() -> void                          # 左键：查冷却、播动画、生成判定
 # func gain_exp(value: int) -> void              # 转发给 PlayerStats

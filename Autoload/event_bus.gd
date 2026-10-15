@@ -19,21 +19,16 @@ extends Node
 # signal item_removed(item: ItemBase, count: int)
 #        # 背包"内容变了"不走总线 —— 直接 connect 那个容器的 changed
 #
-# signal health_changed(actor: Actor, current: float, maximum: float)
-# signal mana_changed(actor: Actor, current: float, maximum: float)
-# signal stats_changed(actor: Actor)          # 只说"谁的属性变了"，要值问 Actor.get_stat()
-# signal exp_changed(actor: Actor, current: int, need: int)
-# signal leveled_up(actor: Actor, level: int)
-# signal points_changed(actor: Actor, remain: int)
-# signal skill_cast(skill: SkillData)          # 施放成功（扣蓝、开冷却）才发
-#
-# signal damage_dealt(target: Actor, value: float)
-# signal actor_died(actor: Actor)
-#
-# signal gold_changed(current: int, change: int = 0)
-#        # current = 现在有多少（界面直接显示）；change = 这次增减多少（飘字/音效/统计）
-#        # 只要其中一个时，另一个写 0
-#
-# signal hint_requested(text: String)          # 弹一句提示（HUD 负责显示）
-# signal game_saved
-# signal game_loaded
+signal on_health_changed(actor: Actor, current: float, maximum: float)
+signal on_actor_died(actor: Actor)
+signal on_gold_changed(current: int, change: int)   # current = 现在有多少（界面直接显示）；change = 这次增减多少（飘字/音效/统计）  # 只要其中一个时，另一个写 0
+signal on_hint_requested(text: String)          # 弹一句提示（HUD 负责显示）
+signal on_damage_dealt(target: Actor, value: float)   # 谁挨了多少（伤害数字 / 受击反馈）
+# signal on_game_saved
+# signal on_game_loaded
+# signal on_mana_changed(actor: Actor, current: float, maximum: float)
+# signal on_stats_changed(actor: Actor)          # 只说"谁的属性变了"，要值问 Actor.get_stat()
+# signal on_exp_changed(actor: Actor, current: int, need: int)
+# signal on_leveled_up(actor: Actor, level: int)
+# signal on_points_changed(actor: Actor, remain: int)
+# signal on_skill_cast(skill: SkillData)          # 施放成功（扣蓝、开冷却）才发

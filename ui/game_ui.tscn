@@ -1,0 +1,252 @@
+[gd_scene format=3 uid="uid://bhx4ifm4fm8pn"]
+
+[ext_resource type="Script" uid="uid://ci0c04xi0d726" path="res://ui/game_ui.gd" id="1_3vkek"]
+[ext_resource type="Script" uid="uid://bk8kcdwic54me" path="res://ui/panels/hud_panel.gd" id="1_xmswo"]
+[ext_resource type="PackedScene" uid="uid://r6cy3bcv5gxt" path="res://ui/panels/container/container_panel.tscn" id="2_w75iv"]
+[ext_resource type="PackedScene" uid="uid://gvruocty1o0x" path="res://ui/common/menu_button.tscn" id="3_hgyfx"]
+[ext_resource type="PackedScene" uid="uid://brgwg2gveexa1" path="res://ui/panels/equipment/equipment_panel.tscn" id="3_imuuq"]
+[ext_resource type="Theme" uid="uid://jl5b7h6082sq" path="res://ui/theme/game_theme.tres" id="3_iqfqv"]
+[ext_resource type="Texture2D" uid="uid://chl3tal0v806j" path="res://Sprites/Items/Tool/Axe.png" id="4_f7kcv"]
+[ext_resource type="PackedScene" uid="uid://bdevgglj28xjl" path="res://ui/panels/stats/stats_panel.tscn" id="4_kwc50"]
+[ext_resource type="Texture2D" uid="uid://3p8iooj1mo5j" path="res://Sprites/Items/Weapons/Lance/Sprite.png" id="5_fgkwl"]
+[ext_resource type="Texture2D" uid="uid://gjnokcseymfk" path="res://Sprites/Items/Object/Bag.png" id="5_hsnwv"]
+[ext_resource type="PackedScene" uid="uid://n67u1n0p1ta8" path="res://ui/common/slot.tscn" id="5_slot"]
+[ext_resource type="Texture2D" uid="uid://mm445ygdhav3" path="res://Sprites/stats.png" id="5_vad0l"]
+[ext_resource type="Texture2D" uid="uid://dyglk4g6ry4xa" path="res://Sprites/Ui/Theme/Wip/ThemeBamboo/nine_path_panel.png" id="9_f7kcv"]
+[ext_resource type="Texture2D" uid="uid://dbfg8jvijdjdb" path="res://Sprites/Items/Treasure/GoldCoin.png" id="9_ikwi1"]
+[ext_resource type="PackedScene" uid="uid://idq3emfsn5nf" path="res://ui/panels/craft/craft_panel.tscn" id="12_fgkwl"]
+[ext_resource type="PackedScene" uid="uid://m5a3dsp3c47p" path="res://ui/panels/market/market_panel.tscn" id="14_85ca7"]
+[ext_resource type="Script" uid="uid://cx55y8mn882cu" path="res://ui/common/drag_hand.gd" id="18_ydwuc"]
+[ext_resource type="PackedScene" uid="uid://lcubfdoabtil" path="res://ui/panels/save/save_panel.tscn" id="19_jwl6g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0e3nr"]
+font_size = 10
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vtgmo"]
+texture = ExtResource("9_f7kcv")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7kcv"]
+texture = ExtResource("9_f7kcv")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[node name="HUD" type="CanvasLayer" unique_id=934747633]
+script = ExtResource("1_3vkek")
+
+[node name="HudPanel" type="Control" parent="." unique_id=1861723378]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xmswo")
+
+[node name="HpBar" type="ProgressBar" parent="HudPanel" unique_id=1712920111]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 10)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 128.0
+offset_bottom = 18.0
+show_percentage = false
+
+[node name="HpLabel" type="Label" parent="HudPanel" unique_id=1063686968]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 14)
+layout_mode = 0
+offset_left = 132.0
+offset_top = 6.0
+offset_right = 252.0
+offset_bottom = 20.0
+label_settings = SubResource("LabelSettings_0e3nr")
+
+[node name="CoinLabel" type="Label" parent="HudPanel" unique_id=913482438]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 22.0
+offset_right = 47.0
+offset_bottom = 38.0
+theme = ExtResource("3_iqfqv")
+
+[node name="HintLabel" type="Label" parent="HudPanel" unique_id=1710349890]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 72.0
+offset_right = 20.0
+offset_bottom = 86.0
+grow_horizontal = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuBar" type="HBoxContainer" parent="." unique_id=2019051671]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -136.0
+offset_top = -56.0
+offset_right = -10.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="Bag_Button" parent="MenuBar" unique_id=1175670833 node_paths=PackedStringArray("target_panel") instance=ExtResource("3_hgyfx")]
+layout_mode = 2
+icon = ExtResource("5_hsnwv")
+target_panel = NodePath("../../Panel/Conta_Panel")
+
+[node name="Equip_Button" parent="MenuBar" unique_id=973836267 node_paths=PackedStringArray("target_panel") instance=ExtResource("3_hgyfx")]
+layout_mode = 2
+icon = ExtResource("5_fgkwl")
+target_panel = NodePath("../../Panel/Equip_Panel")
+
+[node name="Stats_Button" parent="MenuBar" unique_id=106108303 node_paths=PackedStringArray("target_panel") instance=ExtResource("3_hgyfx")]
+layout_mode = 2
+icon = ExtResource("5_vad0l")
+target_panel = NodePath("../../Panel/Stats_Panel")
+
+[node name="Craft_Button" parent="MenuBar" unique_id=1873908220 node_paths=PackedStringArray("target_panel") instance=ExtResource("3_hgyfx")]
+layout_mode = 2
+icon = ExtResource("4_f7kcv")
+target_panel = NodePath("../../Panel/Craft_Panel")
+
+[node name="Market_Button" parent="MenuBar" unique_id=214248079 node_paths=PackedStringArray("target_panel") instance=ExtResource("3_hgyfx")]
+layout_mode = 2
+icon = ExtResource("9_ikwi1")
+target_panel = NodePath("../../Panel/Market_Panel")
+
+[node name="MenuBar2" type="HBoxContainer" parent="." unique_id=778004648]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_bottom = 40.0
+grow_horizontal = 0
+alignment = 1
+
+[node name="Save_Button" parent="MenuBar2" unique_id=1201759332 node_paths=PackedStringArray("target_panel") instance=ExtResource("3_hgyfx")]
+unique_name_in_owner = true
+layout_mode = 2
+target_panel = NodePath("../../Panel/Save_Panel")
+
+[node name="Panel" type="Control" parent="." unique_id=876137274]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Chest_Panel" parent="Panel" unique_id=1014040152 instance=ExtResource("2_w75iv")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 24.0
+offset_top = -28.0
+offset_right = 81.0
+offset_bottom = 28.0
+grow_horizontal = 1
+mouse_filter = 2
+slot_scene = ExtResource("5_slot")
+
+[node name="Conta_Panel" parent="Panel" unique_id=1997598447 instance=ExtResource("2_w75iv")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = -28.5
+offset_top = -28.0
+offset_right = 28.5
+offset_bottom = 28.0
+mouse_filter = 2
+slot_scene = ExtResource("5_slot")
+
+[node name="Equip_Panel" parent="Panel" unique_id=1094029127 instance=ExtResource("3_imuuq")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = -105.0
+offset_top = -101.5
+offset_right = 105.0
+offset_bottom = 101.5
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vtgmo")
+
+[node name="Stats_Panel" parent="Panel" unique_id=923208919 instance=ExtResource("4_kwc50")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = -28.5
+offset_top = -71.0
+offset_right = 28.5
+offset_bottom = 71.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_f7kcv")
+
+[node name="Craft_Panel" parent="Panel" unique_id=768032468 instance=ExtResource("12_fgkwl")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Market_Panel" parent="Panel" unique_id=937725243 instance=ExtResource("14_85ca7")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -35.0
+offset_right = 28.5
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Save_Panel" parent="Panel" unique_id=768486968 instance=ExtResource("19_jwl6g")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DragHand" type="TextureRect" parent="." unique_id=1648217018]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+offset_right = 28.0
+offset_bottom = 28.0
+mouse_filter = 2
+script = ExtResource("18_ydwuc")

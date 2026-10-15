@@ -1,11 +1,47 @@
 [gd_scene format=3 uid="uid://c31ejscxsa4v5"]
 
 [ext_resource type="Script" uid="uid://2gy5tlt2g1iu" path="res://Scenes/character/player/player.gd" id="1_player"]
+[ext_resource type="Texture2D" uid="uid://cif5jmjk1clyv" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Attack.png" id="2_2rgin"]
 [ext_resource type="Script" uid="uid://ck62kwddfrudv" path="res://Scripts/fsm.gd" id="2_fsm"]
 [ext_resource type="Script" uid="uid://4w8od7rg5nf3" path="res://Scenes/character/player/states/idle.gd" id="3_idle"]
+[ext_resource type="Texture2D" uid="uid://c1hirsfs8m6u6" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Dead.png" id="3_wmao3"]
 [ext_resource type="Script" uid="uid://d0t6n2bdurvuy" path="res://Scenes/character/player/states/move.gd" id="4_move"]
 [ext_resource type="Texture2D" uid="uid://cc0q6egjxfobw" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Idle.png" id="5_idle_tex"]
 [ext_resource type="Texture2D" uid="uid://bacld8ysircpa" path="res://Sprites/Actor/Characters/Boy/SeparateAnim/Walk.png" id="6_walk_tex"]
+[ext_resource type="Script" uid="uid://v33y4bwgvc06" path="res://Scenes/character/states/attack.gd" id="8_qx5g0"]
+[ext_resource type="Script" uid="uid://ckey2pmetkyct" path="res://Scenes/character/player/states/dead.gd" id="10_4klla"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qx5g0"]
+atlas = ExtResource("2_2rgin")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmao3"]
+atlas = ExtResource("2_2rgin")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4klla"]
+atlas = ExtResource("2_2rgin")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ctly"]
+atlas = ExtResource("2_2rgin")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wg6r"]
+atlas = ExtResource("3_wmao3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2cdf"]
+atlas = ExtResource("3_wmao3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j225u"]
+atlas = ExtResource("3_wmao3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsm4s"]
+atlas = ExtResource("3_wmao3")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_down"]
 atlas = ExtResource("5_idle_tex")
@@ -91,6 +127,70 @@ region = Rect2(16, 48, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_qx5g0")
+}],
+"loop": 0,
+"name": &"attack_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmao3")
+}],
+"loop": 0,
+"name": &"attack_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4klla")
+}],
+"loop": 0,
+"name": &"attack_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ctly")
+}],
+"loop": 0,
+"name": &"attack_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wg6r")
+}],
+"loop": 1,
+"name": &"dead_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2cdf")
+}],
+"loop": 1,
+"name": &"dead_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j225u")
+}],
+"loop": 1,
+"name": &"dead_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsm4s")
+}],
+"loop": 1,
+"name": &"dead_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_idle_down")
 }],
 "loop": 1,
@@ -122,7 +222,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.64,
 "texture": SubResource("AtlasTexture_walk_down_1")
 }, {
 "duration": 1.0,
@@ -139,7 +239,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.64,
 "texture": SubResource("AtlasTexture_walk_left_1")
 }, {
 "duration": 1.0,
@@ -156,7 +256,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.64,
 "texture": SubResource("AtlasTexture_walk_right_1")
 }, {
 "duration": 1.0,
@@ -173,7 +273,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.64,
 "texture": SubResource("AtlasTexture_walk_up_1")
 }, {
 "duration": 1.0,
@@ -192,20 +292,38 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 6.0
-height = 14.0
+height = 12.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0e3nr"]
+radius = 7.0
+height = 16.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpyxu"]
+radius = 2.0
+height = 10.0
 
 [node name="Player" type="CharacterBody2D" unique_id=262270502]
 collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_player")
+base_max_health = 0.0
+base_hit_offset = Vector2(0, 9)
+two_way_body = true
 
 [node name="AnimSprite" type="AnimatedSprite2D" parent="." unique_id=1441545675]
-position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_boy")
 animation = &"idle_down"
 autoplay = "idle_down"
 
+[node name="HandPivot" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="WeaponSprite" type="Sprite2D" parent="HandPivot" unique_id=1818097886]
+unique_name_in_owner = true
+z_index = 1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1535451514]
-position = Vector2(0, -7)
+visible = false
 shape = SubResource("CapsuleShape2D_body")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1152930003]
@@ -219,3 +337,28 @@ script = ExtResource("3_idle")
 
 [node name="move" type="Node" parent="FSM" unique_id=32306265]
 script = ExtResource("4_move")
+
+[node name="attack" type="Node" parent="FSM" unique_id=618811641]
+script = ExtResource("8_qx5g0")
+
+[node name="dead" type="Node" parent="FSM" unique_id=172075593]
+script = ExtResource("10_4klla")
+death_delay = 6.0
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=1156912449]
+unique_name_in_owner = true
+visible = false
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=810212414]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_0e3nr")
+
+[node name="HitBox" type="Area2D" parent="HandPivot" unique_id=107295309]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandPivot/HitBox" unique_id=116324633]
+shape = SubResource("CapsuleShape2D_kpyxu")

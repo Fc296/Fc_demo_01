@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://d0wbsgbymykye"]
+
+[ext_resource type="Script" uid="uid://bg1xouy8b2db8" path="res://ui/common/panel_header.gd" id="1_p6mgl"]
+[ext_resource type="Texture2D" uid="uid://bv7upoqafuuyf" path="res://Sprites/close.png" id="2_p6mgl"]
+[ext_resource type="Texture2D" uid="uid://dyglk4g6ry4xa" path="res://Sprites/Ui/Theme/Wip/ThemeBamboo/nine_path_panel.png" id="2_qo7d8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c6v6d"]
+texture = ExtResource("2_qo7d8")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6plq5"]
+texture = ExtResource("2_qo7d8")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qo7d8"]
+texture = ExtResource("2_qo7d8")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[node name="PanelHeader" type="HBoxContainer" unique_id=744083921]
+script = ExtResource("1_p6mgl")
+
+[node name="Title" type="Label" parent="." unique_id=1759065728]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Close_Button" type="Button" parent="." unique_id=1969933051]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_c6v6d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6plq5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qo7d8")
+icon = ExtResource("2_p6mgl")
+icon_alignment = 1

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://r6cy3bcv5gxt"]
+
+[ext_resource type="Texture2D" uid="uid://dyglk4g6ry4xa" path="res://Sprites/Ui/Theme/Wip/ThemeBamboo/nine_path_panel.png" id="1_4unqt"]
+[ext_resource type="Script" uid="uid://dawfsluy3nay4" path="res://ui/panels/container/container_panel.gd" id="1_xk281"]
+[ext_resource type="PackedScene" uid="uid://d0wbsgbymykye" path="res://ui/common/panel_header.tscn" id="3_1o8wg"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihsej"]
+texture = ExtResource("1_4unqt")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[node name="Panel" type="PanelContainer" unique_id=1014040152 node_paths=PackedStringArray("header")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -26.0
+offset_right = 26.5
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ihsej")
+script = ExtResource("1_xk281")
+header = NodePath("MarginContainer/VB/PanelHeader")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1023273854]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VB" type="VBoxContainer" parent="MarginContainer" unique_id=1961466922]
+layout_mode = 2
+
+[node name="PanelHeader" parent="MarginContainer/VB" unique_id=744083921 instance=ExtResource("3_1o8wg")]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="MarginContainer/VB" unique_id=637040461]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 6

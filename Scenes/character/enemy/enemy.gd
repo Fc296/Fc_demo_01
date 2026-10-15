@@ -6,11 +6,32 @@ class_name Enemy
 ## 不同"性格"靠换状态节点组合，不加 if 分支。完整说明见《脚本说明.md》→ Scenes/character/enemy/enemy.gd
 
 ## ——— 接口清单（待实现）———
-# @export var detect_range: float = 160.0     # 多远开始追
-# @export var attack_range: float = 24.0      # 多近开始打
-# @export var chase_speed: float = 60.0
-# @export var lose_sight_time: float = 2.0    # 丢失目标后放弃追击的秒数
-# @export var loot_table: LootTable
-#
-# func _on_died() -> void                     # 抽掉落 → 交给 loot_spawner → queue_free
-# func distance_to_player() -> float
+@export var detect_range: float = 160.0     # 多远开始追
+@export var attack_range: float = 24.0      # 多近开始打
+@export var lose_sight_time: float = 2.0    # 丢失目标后放弃追击的秒数
+@export var loot_table: LootTable
+
+
+func _ready() -> void:
+	super()
+	died.connect(_on_died)
+
+
+func distance_to_player() -> float:
+	var player := get_tree().get_first_node_in_group(&"player") as Actor
+	# 判空：玩家不存在/已死亡，返回一个极大距离
+	if player == null or player.health <= 0:
+		return INF
+	return global_position.distance_to(player.global_position)
+
+
+func _on_died() -> void:
+	# 掉落坐标要在销毁之前拿到 —— queue_free() 之后再读 global_position 就晚了
+	var drop_pos := global_position
+	if loot_table != null:
+		LootSpawner.spawn(loot_table.roll(), drop_pos)      # 抽签在敌人这边做
+		var gold := loot_table.roll_gold()
+		if gold > 0:
+			GameData.add_gold(gold)                          # 金币直接进钱包
+			EventBus.on_hint_requested.emit("获得 %d 金币" % gold)
+	fsm.transition_to(&"dead")

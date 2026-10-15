@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LootEntry" format=3 uid="uid://cmja7lqlv5ko8"]
+
+[ext_resource type="Resource" uid="uid://plhy2yb373xn" path="res://data/items/iron.tres" id="1_atkbo"]
+[ext_resource type="Script" uid="uid://d1xs5x8ss0jdh" path="res://data/loot_entry.gd" id="1_q5wci"]
+
+[resource]
+script = ExtResource("1_q5wci")
+item = ExtResource("1_atkbo")
+chance = 0.8
+max_count = 2
+metadata/_custom_type_script = "uid://d1xs5x8ss0jdh"

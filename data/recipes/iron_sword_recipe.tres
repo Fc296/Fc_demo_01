@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3 uid="uid://bugi5wgb6epm7"]
+
+[ext_resource type="Resource" uid="uid://b5jtqajkiaiqc" path="res://data/items/iron_sword.tres" id="1_g8fr3"]
+[ext_resource type="Script" uid="uid://6p8u8p4ehgr1" path="res://data/recipe_data.gd" id="1_ptx04"]
+
+[resource]
+script = ExtResource("1_ptx04")
+result = ExtResource("1_g8fr3")
+material_ids = Array[StringName]([&"iron", &"wood"])
+material_counts = Array[int]([2, 2])
+metadata/_custom_type_script = "uid://6p8u8p4ehgr1"

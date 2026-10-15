@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LootTable" format=3 uid="uid://b0rlwwwp72vhv"]
+
+[ext_resource type="Script" uid="uid://h51ke335s2n0" path="res://data/loot_table.gd" id="1_titwn"]
+[ext_resource type="Script" uid="uid://d1xs5x8ss0jdh" path="res://data/loot_entry.gd" id="1_y14t5"]
+[ext_resource type="Resource" uid="uid://bbrl2unlsqynp" path="res://data/loots/entries/bear_claw.tres" id="2_knnmb"]
+[ext_resource type="Resource" uid="uid://dg1aosmhkl8v1" path="res://data/loots/entries/hp_potion.tres" id="3_gliku"]
+[ext_resource type="Resource" uid="uid://durjad0ehuhoh" path="res://data/loots/entries/wood.tres" id="4_gliku"]
+[ext_resource type="Resource" uid="uid://cmja7lqlv5ko8" path="res://data/loots/entries/iron.tres" id="5_gkjmf"]
+[ext_resource type="Resource" uid="uid://p0bu36qvdbfy" path="res://data/loots/entries/axe.tres" id="6_4bork"]
+[ext_resource type="Resource" uid="uid://d3kvuq7em2ly2" path="res://data/loots/entries/dagger.tres" id="7_45gep"]
+
+[resource]
+script = ExtResource("1_titwn")
+min_gold = 5
+max_gold = 10
+entries = Array[ExtResource("1_y14t5")]([ExtResource("2_knnmb"), ExtResource("3_gliku"), ExtResource("4_gliku"), ExtResource("5_gkjmf"), ExtResource("6_4bork"), ExtResource("7_45gep")])
+metadata/_custom_type_script = "uid://h51ke335s2n0"
