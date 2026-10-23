@@ -196,9 +196,9 @@ func to_dict() -> Dictionary:
 	return {"slots": arr}
 
 
-func from_dict(data: Dictionary, item_db: Array[ItemBase]) -> void:
+func from_dict(data: Dictionary, find_item: Callable) -> void:
 	# ⚠️ 原地改，**不要 new 一个新容器** —— 面板连的就是这个对象
 	var saved: Array = data.get("slots", [])
 	for i in slots.size():
-		slots[i] = SlotData.from_dict(saved[i], item_db) if i < saved.size() else null
+		slots[i] = SlotData.from_dict(saved[i], find_item) if i < saved.size() else null
 	changed.emit()

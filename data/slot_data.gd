@@ -33,19 +33,19 @@ func to_dict() -> Dictionary:
 	return {"id": String(item.id), "count": count}
 
 
-# 读档：拿字典里的 id 去物品表里找回真正的物品对象，再造成一格
+# 读档：拿字典里的 id 换回真正的物品对象，再造成一格。
+# find_item 是一个"给 id、还物品"的函数（GameData.find_item 的方法引用）——
+# 数据层只认识这个函数，不认识 Autoload，也不认识物品表长什么样。
 # static = 属于"类"本身而不是某个格子，所以不用先有对象就能调（它本身就是用来造格子的）
-static func from_dict(data: Dictionary, item_db: Array[ItemBase]) -> SlotData:
+static func from_dict(data: Dictionary, find_item: Callable) -> SlotData:
 	# 空格子在存档里就是一个空字典 —— 直接返回 null，
-	# 别拿空 id 去物品表里找，否则每读一次档就刷一屏"找不到 id = "的警告
+	# 别拿空 id 去查表，否则每读一次档就刷一屏"找不到 id = "的警告
 	if data.is_empty():
 		return null
-	# item_db 由调用方传进来，不由数据层去问 Autoload（分层：数据层不依赖游戏）
 	var wanted := StringName(data.get("id", ""))   # 存档里存的是 id 字符串，先统一成 StringName 再比
 	if wanted == &"":
 		return null                                # 防御：id 是空的（手改过存档）也当空格子
-	for entry in item_db:
-		if entry != null and entry.id == wanted:
-			return SlotData.new(entry, int(data.get("count", 1)))
-	push_warning("读档失败：物品表里找不到 id = %s" % wanted)
-	return null
+	var it: ItemBase = find_item.call(wanted)
+	if it == null:
+		return null                                # 找不到时 find_item 自己会 push_warning，这里不重复报
+	return SlotData.new(it, int(data.get("count", 1)))   # JSON 数字会变成 float，所以一律 int()

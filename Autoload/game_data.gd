@@ -11,6 +11,12 @@ extends Node
 ## ——— 接口清单（待实现）———
 # enum GameState { PLAYING, PAUSED, GAME_OVER }
 
+## ── 存档版本 ──
+## 改一次"存档结构"（加 / 删 / 改字段、换 id）就 +1，并在下面记一行原因。
+## 策略：**不做逐版本迁移** —— 老档缺哪个键，就用 from_dict 里的 get(key, 默认) 补。
+## 比游戏还新的档直接拒绝读（fail fast），别硬读出一份"看起来对"的数据。
+##   v1 初版：stats / inventory / market / player_pos
+##   v2 加装备栏（9 格容器）与 stamp（存档时间）
 const SAVE_VERSION := 2
 const SAVE_PATH := "user://save_%d.json"
 
@@ -128,6 +134,7 @@ func save_to_slot(slot: int = 0) -> void:
 	if p != null:
 		pos = [p.global_position.x, p.global_position.y]      # 用 [x, y] 存，JSON 里一眼能看懂
 		scene_path = p.get_tree().current_scene.scene_file_path
+	# 当前血量 / 蓝量故意不存：读档 = 重载场景 = 回满（见《框架说明》→ 存档契约 → 不存清单）
 	var data := {
 		"version": SAVE_VERSION,
 		"stamp": Time.get_datetime_string_from_system(false, true),   # ← 新增："2026-10-03 14:30:00"
@@ -167,14 +174,25 @@ func load_from_slot(slot: int = 0) -> bool:
 		return false
 	var data: Dictionary = parsed
 
+	# 版本号：老档靠默认值补齐，比游戏还新的档直接拒（fail fast）
+	# 缺 version 键 = 最老的档（v1），不是损坏
+	var version := int(data.get("version", 1))
+	if version > SAVE_VERSION:
+		push_error("存档版本 %d 比游戏(%d)还新，拒绝读取：%s" % [version, SAVE_VERSION, path])
+		return false
+	if version < SAVE_VERSION:
+		push_warning("存档版本 %d 偏旧，缺的键会用默认值补齐" % version)
+
 	# ⚠️ 顺序有讲究：先把装备栏恢复好，再恢复 stats
 	#    因为 player_stats.from_dict() 内部会 recalc()，而 recalc 要读装备栏
-	inventory.from_dict(data.get("inventory", {}), item_db)
-	equipment.from_dict(data.get("equipment", {}), item_db)
+	#    find_item 是方法引用（不带括号）：数据层靠它把 id 换成对象，自己不依赖 Autoload
+	inventory.from_dict(data.get("inventory", {}), find_item)
+	equipment.from_dict(data.get("equipment", {}), find_item)
 	market.from_dict(data.get("market", {}))
 	player_stats.from_dict(data.get("stats", {}))
 	player_stats.recalc()          # 兜底再算一次，确保属性和装备一致
-	EventBus.on_gold_changed.emit(player_stats.gold, 0)    # ← 补这一句，HUD 才会刷新
+	# 这里不广播金币：读档后 SavePanel 会 reload_current_scene()，HUD / 面板全部重建，
+	# 各自在 _ready / open() 里自己拉当前值（HudPanel 已经这么做）。手动补一发只会刷到一个马上销毁的界面。
 	print("[存档] 已读取 ", path)
 	
 	# 读档只"寄存"坐标，绝不自己去动节点。两个原因：

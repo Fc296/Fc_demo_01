@@ -197,7 +197,9 @@ func cooldown_left(skill: SkillData) -> float:
 	return maxf(left / 1000.0, 0.0)
 
 
-## ── 存档（只存基础类型；装备存 id 的转换放到第 7 步）──
+## ── 存档（只存基础类型；装备本身由 InventoryData 存 id）──
+## 冷却（cooldown_until）故意不存：它的键是 SkillData 对象，JSON 存不了。
+## 等技能系统做起来时改成存 skill.id；现在读档 = 冷却清零。
 # 存档：把数值写成一堆基础类型（数字 / 字典），不写对象
 func to_dict() -> Dictionary:
 	return {
