@@ -13,6 +13,7 @@ script = ExtResource("2_d3ohw")
 hit_shape = SubResource("CapsuleShape2D_fe1x0")
 hit_offset = Vector2(0, 9)
 hold_texture = ExtResource("1_fe1x0")
+hold_orbit = Vector2(9, 6)
 equip_type = 8
 required_strength = 5
 required_agility = 5

@@ -19,6 +19,7 @@ class_name WeaponData
 
 @export var hold_texture: Texture2D                    # 手持图：本项目用同目录的 Sprite.png（背包图标），它是"朝上"画的
 @export var hold_angle: float = PI               # 贴图"天生"朝哪（下=0 约定）：图标朝上 → PI。换用 SpriteInHand.png 的那把必须显式填 0
+@export var hold_orbit := Vector2(9.0, 6.0)      # 武器绕人物图中心转的椭圆半轴：x = 左右、y = 上下（暴露出来方便随时调）
 @export var swing_arc: float = 90.0                    # 挥砍扫过的角度（度）
 @export var swing_time: float = 0.12                   # 挥砍用时（秒）
 

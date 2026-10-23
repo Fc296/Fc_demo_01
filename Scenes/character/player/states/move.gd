@@ -16,9 +16,7 @@ func physics_update(delta: float):
 		fsm.transition_to(&"idle")
 		return
 
-	# 设置朝向
-	actor.face(input_dir)
-	# 朝向变了立刻换动画（进 move 状态时播的是"上一次的朝向"）
+	# 朝向由鼠标决定（Player._process），这里只管移动；换边时 play_anim 会按新朝向重播
 	actor.play_anim(&"walk")
 	# 获取移动速度数值
 	var spd:float = actor.move_speed()

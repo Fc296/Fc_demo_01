@@ -12,7 +12,6 @@ class_name Player
 # @onready var state_machine: FSM = $FSM
 @onready var weapon_sprite: Sprite2D = %WeaponSprite
 @onready var hand_pivot: Node2D = %HandPivot
-@export var hold_orbit := Vector2(9.0, 6.0)   # 武器绕角色转的椭圆：x = 左右半轴，y = 上下半轴
 const UI_MOVE_SCALE := 0.4                    # 面板打开时的移动倍率（"边走边翻背包"）
 
 var spawn_pos: Vector2 = Vector2.ZERO      # 出生点，复活用
@@ -45,13 +44,25 @@ func _process(delta: float) -> void:
 	else:
 		weapon_sprite.hide()                       # 空手：只藏贴图；"手"照旧跟着鼠标转（判定框挂在它下面）
 
+	var mouse_dir := get_global_mouse_position() - global_position
+
+	# ① 鼠标在左半边（2、3 象限）→ 身体朝左；右半边（1、4 象限）→ 朝右
+	if not mouse_dir.is_zero_approx():
+		var side := "left" if mouse_dir.x < 0.0 else "right"
+		if side != last_facing:
+			last_facing = side
+			_sync_body_anim()
+
+	# ② 武器朝向始终贴住鼠标（挥砍期间交给 Tween）
 	if not weapon_locked:
-		var aim := Actor.aim_angle(get_global_mouse_position() - global_position)
-		hand_pivot.rotation = lerp_angle(hand_pivot.rotation, aim, 0.35)
+		var aim := Actor.aim_angle(mouse_dir)
+		hand_pivot.rotation = aim
 		weapon_sprite.flip_h = sin(aim) > 0.0
-	# ↓ 挥砍和平时都要更新：位置跟随"手"的实际角度，前后关系也一样
+
+	# ③ 武器绕人物图中心转的椭圆偏移 + 上下遮挡（挥砍期间也跟着"手"的实际角度）
 	var dir := Actor.aim_vector(hand_pivot.rotation)
-	var orbit := Vector2(dir.x * hold_orbit.x, dir.y * hold_orbit.y)
+	var orbit_size := w.hold_orbit if w != null else Vector2.ZERO
+	var orbit := Vector2(dir.x * orbit_size.x, dir.y * orbit_size.y)
 	weapon_sprite.position = orbit.rotated(-hand_pivot.rotation)
 	weapon_sprite.z_index = -1 if dir.y < -0.1 else 1
 
@@ -67,6 +78,20 @@ func _apply_saved_position() -> void:      # 读档后：站回存档点
 
 func _on_died() -> void:
 	fsm.transition_to(&"dead")
+
+
+## 鼠标换边时，把"当前动作"按新朝向重播一次（walk 每物理帧会自己刷新，idle 不会）
+func _sync_body_anim() -> void:
+	if fsm == null or fsm.cur_sta == null:
+		return
+	match fsm.cur_sta.name:
+		&"idle":
+			play_anim(&"idle")
+		&"move":
+			play_anim(&"walk")
+		&"attack":
+			var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+			play_anim(&"walk" if not dir.is_zero_approx() else &"idle")
 
 
 ## 面板开合（GameUi 广播）：移动降到 40%、禁攻击；走路动画一起放慢，否则会出现"脚在走、身体在滑"。
