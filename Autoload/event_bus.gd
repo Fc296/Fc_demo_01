@@ -5,10 +5,17 @@ extends Node
 ## 信号归属表与完整纪律见《脚本说明.md》→ Autoload/event_bus.gd
 
 ## 信号归属（写代码时照这张表选）：
-##   Actor.died / FSM.state_changed / InventoryData.changed / Slot.slot_clicked
-##        → 一对一，留在各自的类里，不进总线
-##   EventBus.health_changed / mana_changed / gold_changed / item_added / actor_died …
-##        → 跨系统（数据 ↔ 界面 ↔ 战斗），只在总线声明一次
+##   一对一 → 留在各自的类里，直接 connect：
+##       Actor.died / FSM.state_changed / InventoryData.changed / Slot.slot_clicked
+##       DragHand.changed / PanelBase.closed / PanelHeader.close_pressed / PanelHeader.dragged
+##       DropItem.picked_up
+##   跨系统 → 只在总线声明一次。下表就是全部清单（10-23 审计过），加信号前先看它：
+##       on_health_changed      发：Actor（受击 / 回血 / 回蓝 tick / 复活 / 上限变化）  收：HudPanel
+##       on_gold_changed        发：GameData.add_gold                                 收：CoinLabel / MarketPanel
+##       on_hint_requested      发：任何系统（"说一句话"）                             收：HudPanel
+##       on_damage_dealt        发：Actor.take_damage                                 收：HudPanel（伤害数字）
+##       on_ui_blocking_changed 发：GameUi（有面板开 / 全关）                           收：Player
+##   判断标准只有一条：**收端只有一个、而且关系固定 → 直接 connect，别上总线。**
 ##   凡是"某个人身上的数值变了"，参数必须带上是哪个 Actor（否则多角色会串）。
 
 ## 参数命名约定：变化量 change ／ 一次动作的量 value ／ 个数 count ／ 当前值与上限 current, maximum
@@ -20,7 +27,7 @@ extends Node
 #        # 背包"内容变了"不走总线 —— 直接 connect 那个容器的 changed
 #
 signal on_health_changed(actor: Actor, current: float, maximum: float)
-signal on_actor_died(actor: Actor)
+# signal on_actor_died(actor: Actor)   # 现在没人用（Actor.died 是一对一）；做全局击杀统计 / 任务追踪时再加
 signal on_gold_changed(current: int, change: int)   # current = 现在有多少（界面直接显示）；change = 这次增减多少（飘字/音效/统计）  # 只要其中一个时，另一个写 0
 signal on_hint_requested(text: String)          # 弹一句提示（HUD 负责显示）
 signal on_damage_dealt(target: Actor, value: float)   # 谁挨了多少（伤害数字 / 受击反馈）

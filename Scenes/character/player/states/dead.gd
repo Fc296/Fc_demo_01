@@ -19,5 +19,5 @@ func _revive() -> void:
 	var p: Player = actor
 	p.global_position = p.spawn_pos      # 回出生点
 	p.health = p.max_health()            # 必须手动补满！见下面说明
-	EventBus.on_health_changed.emit(p, p.health, p.max_health())
+	p.refresh_health()                   # 血的广播只走 Actor 这一个出口（顺手再重算一次上限）
 	fsm.transition_to(actor.idle_state)
