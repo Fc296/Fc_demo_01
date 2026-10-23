@@ -4,6 +4,7 @@ class_name SavePanel
 ## 【UI 层 · 存档面板】列出所有存档槽，选中一个就能保存 / 读取。
 ## 面板不碰文件，读写全交给 GameData —— 它只负责"显示槽位 + 转发按钮"。
 
+## 显示几个存档槽。
 @export var slot_count: int = 6
 
 @onready var slot_list: ItemList = %SlotList

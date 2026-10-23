@@ -14,27 +14,46 @@ class_name PlayerStats
 const BASE_ATTR := 5                      # 1 级基准属性，公式以此为原点（照 my-01 的设定）
 
 ## ── 三围与成长 ──
-@export var attrs: Dictionary = {&"strength": BASE_ATTR, &"agility": BASE_ATTR, &"intelligence": BASE_ATTR}   # 三围：力量 / 敏捷 / 智力（键是"名字"，用 StringName）
-@export var base_up_need_exp: int = 100    # 1 级升 2 级需要多少经验（往后每级乘 up_rate）
-@export var up_rate: float = 1.2           # 每级所需经验的增长倍率，1.2 = 每级多两成
-@export var up_points: int = 2             # 每升一级发几点属性点
+## 三围：力量 / 敏捷 / 智力（键是 StringName，值是裸属性）。
+@export var attrs: Dictionary = {&"strength": BASE_ATTR, &"agility": BASE_ATTR, &"intelligence": BASE_ATTR}
+## 1 级升 2 级需要多少经验（往后每级乘 up_rate）。
+@export var base_up_need_exp: int = 100
+## 每级所需经验的增长倍率（1.2 = 每级多两成）。
+@export var up_rate: float = 1.2
+## 每升一级发几点属性点。
+@export var up_points: int = 2
 
 ## ── 公式基数与系数（照 my-01，检查器可调；改平衡只动这里）──
-@export var base_max_hp: float = 100.0     # 生命基线：三围都是 5 时的血量
-@export var base_max_mp: float = 50.0      # 法力基线
-@export var base_damage: float = 20.0      # 攻击基线
-@export var base_defense: float = 5.0      # 防御基线
-@export var base_crit: float = 5.0         # 基础暴击率 %
-@export var base_crit_dam: float = 150.0   # 暴击伤害 %（150 = 暴击打 1.5 倍）
-@export var base_miss: float = 5.0         # 基础闪避率 %
-@export var base_att_sp: float = 100.0     # 攻击速度 %
-@export var base_mov_sp: float = 100.0     # 面板上的移速百分比；真正走路用 Actor.base_move_speed
-@export var hp_per_strength: float = 0.10        # 力量每高 1 点，生命多 0.10 倍基线（+10 血）
-@export var damage_per_agility: float = 0.05     # 敏捷每高 1 点，攻击多 0.05 倍基线（+1 攻）
-@export var mp_per_intelligence: float = 0.10    # 智力每高 1 点，法力多 0.10 倍基线（+5 蓝）
-@export var defense_per_strength: float = 0.05   # 力量每高 1 点，防御多 0.05 倍基线
-@export var crit_per_agility: float = 0.05       # 敏捷每高 1 点，暴击率 +0.05%
-@export var miss_per_agility: float = 0.5        # 敏捷每高 1 点，闪避 +0.5%
+## 生命基线：三围都是 5 时的最大生命。
+@export var base_max_hp: float = 100.0
+## 法力基线：三围都是 5 时的最大法力。
+@export var base_max_mp: float = 50.0
+## 攻击基线：三围都是 5 时的攻击力。
+@export var base_damage: float = 20.0
+## 防御基线：三围都是 5 时的防御力。
+@export var base_defense: float = 5.0
+## 基础暴击率（%）。
+@export var base_crit: float = 5.0
+## 暴击伤害（%，150 = 暴击打 1.5 倍）。
+@export var base_crit_dam: float = 150.0
+## 基础闪避率（%）。
+@export var base_miss: float = 5.0
+## 攻击速度（%，面板显示用）。
+@export var base_att_sp: float = 100.0
+## 面板上的移速百分比（真正走路用 Actor.base_move_speed）。
+@export var base_mov_sp: float = 100.0
+## 力量每高 1 点，生命多几倍基线（0.10 = +10 血）。
+@export var hp_per_strength: float = 0.10
+## 敏捷每高 1 点，攻击多几倍基线（0.05 = +1 攻）。
+@export var damage_per_agility: float = 0.05
+## 智力每高 1 点，法力多几倍基线（0.10 = +5 蓝）。
+@export var mp_per_intelligence: float = 0.10
+## 力量每高 1 点，防御多几倍基线（0.05 = +0.25 防）。
+@export var defense_per_strength: float = 0.05
+## 敏捷每高 1 点，暴击率加多少个百分点（0.05 = +0.05%）。
+@export var crit_per_agility: float = 0.05
+## 敏捷每高 1 点，闪避加多少个百分点（0.5 = +0.5%）。
+@export var miss_per_agility: float = 0.5
 
 ## ── 运行期数据 ──
 var level: int = 1            # 当前等级

@@ -18,7 +18,6 @@ element = 2
 element_amount = 5.0
 knockback = 12.0
 hold_texture = ExtResource("1_74bhg")
-hold_orbit = Vector2(9, 6)
 equip_type = 8
 bonus_damage = 10.0
 id = &"axe"

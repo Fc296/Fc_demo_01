@@ -6,9 +6,12 @@ class_name EnemySpawner
 ## 坑：respawn_delay 必须大于死亡动画时长（敌人是 1.2 秒），
 ##     否则尸体会和新怪叠在一起。
 
-@export var enemy_scene: PackedScene            # 刷什么怪（检查器里拖 enemy.tscn）
-@export var respawn_delay: float = 5.0          # 死后多久刷新
-@export var spawn_on_ready: bool = true         # 进场景就先刷一只
+## 刷什么怪（检查器里拖 enemy.tscn）。
+@export var enemy_scene: PackedScene
+## 怪死后多少秒刷新。
+@export var respawn_delay: float = 5.0
+## 进场景就先刷一只。
+@export var spawn_on_ready: bool = true
 
 var _alive: Actor = null
 

@@ -13,6 +13,8 @@ class_name Player
 @onready var weapon_sprite: Sprite2D = %WeaponSprite
 @onready var hand_pivot: Node2D = %HandPivot
 const UI_MOVE_SCALE := 0.4                    # 面板打开时的移动倍率（"边走边翻背包"）
+## 倒退走（移动方向与鼠标朝向相反）时的速度比例。0.5 = 正常速度的一半。
+@export_range(0.1, 1.0, 0.05) var backpedal_scale: float = 0.5
 
 var spawn_pos: Vector2 = Vector2.ZERO      # 出生点，复活用
 var weapon_locked := false
@@ -38,8 +40,8 @@ func _process(delta: float) -> void:
 	var w := current_weapon()
 	if w != null and w.hold_texture != null:
 		weapon_sprite.texture = w.hold_texture
-		weapon_sprite.offset = Vector2(0, +w.hold_texture.get_height() / 2.0).rotated(w.hold_angle)
-		weapon_sprite.rotation = -w.hold_angle     # 贴图只负责把"天生朝向"补回来（图标朝上 → -PI）
+		# 偏移只有一个来源：WeaponData.hold_orbit（下面算）；贴图只负责把"天生朝向"补回来
+		weapon_sprite.rotation = -w.hold_angle
 		weapon_sprite.show()
 	else:
 		weapon_sprite.hide()                       # 空手：只藏贴图；"手"照旧跟着鼠标转（判定框挂在它下面）
@@ -92,6 +94,12 @@ func _sync_body_anim() -> void:
 		&"attack":
 			var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 			play_anim(&"walk" if not dir.is_zero_approx() else &"idle")
+
+
+## 移动方向相对鼠标朝向：倒退走 → backpedal_scale，否则 1。
+func move_scale_for(dir: Vector2) -> float:
+	var facing_x := -1.0 if last_facing == "left" else 1.0
+	return backpedal_scale if dir.x * facing_x < 0.0 else 1.0
 
 
 ## 面板开合（GameUi 广播）：移动降到 40%、禁攻击；走路动画一起放慢，否则会出现"脚在走、身体在滑"。

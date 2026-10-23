@@ -4,8 +4,10 @@ class_name SlotData
 ## 【数据层 · 格子内容】一格 = 一件物品 + 数量，就这两样。
 ## 约定：空格子 = null（不造 count=0 的空壳）。完整说明见《脚本说明.md》→ data/slot_data.gd
 
-@export var item: ItemBase      # 这一格里装的是哪件物品
-@export var count: int = 1      # 装了几个
+## 这一格里装的是哪件物品（空格子 = null）。
+@export var item: ItemBase
+## 装了几个（1 就是没有堆叠）。
+@export var count: int = 1
 
 
 # 构造函数：SlotData.new(物品, 数量) 直接造出一格

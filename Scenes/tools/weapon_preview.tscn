@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b46ty4umyukak"]
 
 [ext_resource type="Script" uid="uid://b2tlne2f7yaw7" path="res://Scenes/tools/weapon_preview.gd" id="1_tye0o"]
-[ext_resource type="Resource" uid="uid://cmalsvsn2vbe5" path="res://data/items/axe.tres" id="2_775y7"]
-[ext_resource type="Texture2D" uid="uid://cmrjttdh8c7cg" path="res://Sprites/Items/Weapons/Axe/Sprite.png" id="3_2vj4c"]
+[ext_resource type="Resource" uid="uid://b5jtqajkiaiqc" path="res://data/items/iron_sword.tres" id="2_775y7"]
+[ext_resource type="Texture2D" uid="uid://bupam7vv54sus" path="res://Sprites/Items/Weapons/BigSword/Sprite.png" id="3_2vj4c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wha8m"]
-radius = 4.0
+radius = 3.0
 height = 12.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0e3nr"]
@@ -19,15 +19,14 @@ weapon = ExtResource("2_775y7")
 
 [node name="Hold" type="Sprite2D" parent="HoldPivot" unique_id=1099902580]
 z_index = 1
+position = Vector2(0, 6)
 rotation = -3.1415927
 texture = ExtResource("3_2vj4c")
-offset = Vector2(5.68248e-07, -6.5)
 
 [node name="HitBox" type="Area2D" parent="HoldPivot" unique_id=329394737]
 
 [node name="HitShape" type="CollisionShape2D" parent="HoldPivot/HitBox" unique_id=1333811729]
-position = Vector2(0, 12)
-rotation = 1.57
+position = Vector2(0, 9)
 shape = SubResource("CapsuleShape2D_wha8m")
 
 [node name="Target" type="Area2D" parent="." unique_id=514228763]

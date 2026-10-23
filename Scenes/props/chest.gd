@@ -5,6 +5,7 @@ class_name Chest
 ## 铁律：箱子不自己画格子 —— 面板还是同一个 ContainerPanel，只是把容器换成了我的。
 ## 注意：箱子内容暂时不进存档（等阶段二第 8 步"存档"统一处理）。
 
+## 这个箱子有多少格。
 @export var slot_count: int = 12
 
 var inventory := InventoryData.new(slot_count)     # 我的容器

@@ -8,10 +8,14 @@ class_name DropItem
 ## ——— 接口清单（待实现）———
 signal picked_up(item: ItemBase, count: int)
 
+## 这个掉落物是什么（通常由掉落表抽签后填进来，编辑器里也可手动摆测试物）。
 @export var item: ItemBase
+## 数量。
 @export var count: int = 1
-@export var pickup_delay: float = 0.4          # 出生后多久才允许被捡
-@export var scatter_radius: float = 12.0      # 出生时往四周撒开多远（检查器里调）
+## 出生后多少秒内不能被捡（防止刚掉出来就被吸走）。
+@export var pickup_delay: float = 0.4
+## 出生时往四周撒开的最大半径（像素）。
+@export var scatter_radius: float = 12.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 

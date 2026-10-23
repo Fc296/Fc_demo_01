@@ -8,8 +8,10 @@ class_name ContainerPanel
 
 ## ——— 接口清单（待实现）———
 
+## 自动生成格子时用哪个 Slot 场景（预摆模式用不到）。
 @export var slot_scene: PackedScene
-@export var preset_slots: bool = false     # true = 格子已经在场景里摆好了（装备栏），不要自动生成
+## true = 格子已经在场景里摆好了（装备栏），不再自动生成。
+@export var preset_slots: bool = false
 
 @onready var grid: GridContainer = get_node_or_null("%Grid")   # 预摆模式可以没有 Grid
 

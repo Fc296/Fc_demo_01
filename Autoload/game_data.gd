@@ -33,12 +33,17 @@ var has_pending_pos := false              # 用 bool 判断"有没有"，别拿 
 var player_stats: PlayerStats            # 金币 / 经验 / 三围 / 装备加成 / 冷却
 var inventory: InventoryData             # 玩家背包
 var equipment: InventoryData             # 装备栏：9 格，序号 = EquipType 序号
-@export var item_db: Array[ItemBase] = []        # 物品表（编辑器里把 .tres 拖进来）
-@export var inventory_slot_count: int = 36      # 背包初始格子数
+## 物品总表：所有物品 .tres 都要拖进来（存档 / 掉落 / 配方靠它把 id 还原成对象）。
+@export var item_db: Array[ItemBase] = []
+## 新游戏时背包有多少格。
+@export var inventory_slot_count: int = 36
 
-@export var starter_item_ids: Array[StringName] = []     # 开局送的物品（按 id）
-@export var starter_item_counts: Array[int] = []         # 各送几个（和上面一一对应）
-@export var recipe_db: Array[RecipeData] = []        # 检查器里把配方都拖进来
+## 开局赠送的物品 id（和 starter_item_counts 一一对应）。
+@export var starter_item_ids: Array[StringName] = []
+## 每项开局物品各送几个（和 starter_item_ids 一一对应）。
+@export var starter_item_counts: Array[int] = []
+## 所有配方 .tres（锻造面板列的就是这张表）。
+@export var recipe_db: Array[RecipeData] = []
 
 func _ready() -> void:
 	_build_item_index()

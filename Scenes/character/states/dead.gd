@@ -1,6 +1,7 @@
 extends State
 class_name DeadState
 
+## 进死亡状态后多久触发收尾：敌人销毁 / 玩家复活。
 @export var death_delay: float = 1.2
 var _t: float = 0.0
 

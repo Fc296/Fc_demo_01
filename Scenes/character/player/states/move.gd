@@ -20,7 +20,10 @@ func physics_update(delta: float):
 	actor.play_anim(&"walk")
 	# 获取移动速度数值
 	var spd:float = actor.move_speed()
-	actor.velocity = input_dir * spd * actor.move_speed_scale   # 面板打开时 ×0.4
+	# 倒退走 → 半速；走路动画同步放慢，避免"脚在走、身体在滑"
+	var backpedal: float = (actor as Player).move_scale_for(input_dir)
+	actor.anim_sprite.speed_scale = actor.move_speed_scale * backpedal
+	actor.velocity = input_dir * spd * actor.move_speed_scale * backpedal
 	# 物理帧执行移动，只调用一次move_and_slide
 	actor.move_and_slide()
 

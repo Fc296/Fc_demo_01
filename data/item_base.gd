@@ -7,15 +7,24 @@ class_name ItemBase
 
 enum ItemType { MATERIAL, POTION, WEAPON, EQUIPMENT, SKILL, QUEST, KEY }   # 物品大类：素材/药水/武器/装备/技能/任务品/钥匙
 
-@export var id: StringName = &""                   # 身份证号：存档、掉落表、配方都靠它认出是哪件物品（发布后不能改）
-@export var display_name: String = ""              # 界面上显示的名字
-@export_multiline var description: String = ""     # 描述文本（装备的"怪物碎片记忆"就写在这个字段里）
-@export var icon: Texture2D                        # 背包格子里显示的小图标
-@export var max_stack: int = 1                     # 一格最多叠几个；1 = 不能叠
-@export var type: ItemType = ItemType.MATERIAL     # 属于上面哪一大类
-@export var tags: Array[StringName] = []           # 自定义标签，用来做额外分类查询
-@export var can_discard: bool = true               # 允许玩家丢掉吗（任务品建议设 false）
-@export var sell_price: int = 0                    # 卖给商店的底价
+## 身份证号：存档、掉落表、配方都靠它认出是哪件物品（发布后不能改）。
+@export var id: StringName = &""
+## 界面上显示的名字。
+@export var display_name: String = ""
+## 描述文本（装备的"怪物碎片记忆"就写在这里）。
+@export_multiline var description: String = ""
+## 背包格子里显示的小图标。
+@export var icon: Texture2D
+## 一格最多叠几个；1 = 不能叠。
+@export var max_stack: int = 1
+## 物品大类（素材 / 消耗品 / 武器 / 装备…）。
+@export var type: ItemType = ItemType.MATERIAL
+## 自定义标签，用来做额外分类查询。
+@export var tags: Array[StringName] = []
+## 允许玩家丢掉吗（任务品建议设 false）。
+@export var can_discard: bool = true
+## 卖给商店的底价（市场实际价格会按存量浮动）。
+@export var sell_price: int = 0
 
 
 # 能不能叠加：叠加上限大于 1 就能

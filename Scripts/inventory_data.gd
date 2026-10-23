@@ -9,6 +9,7 @@ class_name InventoryData
 
 ## 内容变化 → 直接用 Resource 自带的 changed 信号（不必自己声明）：
 ## 一对一关系，只有它自己的面板关心，所以不进 EventBus
+## 容器有多少格（运行时用 new(格数) 指定，这个默认值只给检查器看）。
 @export var slot_count: int = 24
 var slots: Array[SlotData] = []            # 空格子写 null
 var slot_rule: Callable = Callable()        # (index: int, item: ItemBase) -> bool；空 = 什么都收

@@ -9,10 +9,13 @@ class_name LootTable
 ## 职责边界：本表只"抽签"，生成实物交给 loot_spawner。详见《脚本说明.md》→ data/loot_table.gd
 
 ## ——— 接口清单（待实现）———
+## 掉多少金币的下限（0 = 不掉金币）。
 @export var min_gold: int = 0
+## 掉多少金币的上限。
 @export var max_gold: int = 0
 
-@export var entries: Array[LootEntry] = []      # 每一条各掷一次骰子，互不影响
+## 掉落条目：每一条各掷一次骰子，互不影响。
+@export var entries: Array[LootEntry] = []
 
 ## 抽签结果：[{"item": ItemBase, "count": int}]
 func roll() -> Array[Dictionary]:

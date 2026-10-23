@@ -4,7 +4,9 @@ extends Node2D
 ## 【工具 · 武器参数预览】改 .tres 里的参数 → 这里实时跟着变；手拖判定框 → 点按钮写回。
 ## 只在编辑器里用：不挂 Autoload、不进游戏场景。
 ## 保留"参数设置"这条链路：手持贴图 / 椭圆偏移 / 判定框 / 写回；参考线与每帧对账都去掉了。
+## 偏移只有一个来源：WeaponData.hold_orbit（每帧算位置）；贴图不再另外设 Sprite2D.offset。
 
+## 要预览的武器。换一把 → 下面所有显示立刻按它的数据重摆。
 @export var weapon: WeaponData:
 	set(value):
 		if weapon != null and weapon.changed.is_connected(_apply):
@@ -14,7 +16,9 @@ extends Node2D
 			weapon.changed.connect(_apply)
 		_apply()
 
+## 预览用的瞄准角度（度，0 = 正下方，顺时针为正）。拖它看武器在不同方向的姿势。
 @export_range(-180.0, 180.0, 1.0) var aim_deg: float = 0.0
+## 把画布上手拖过的判定框（位置 / 偏转角 / 形状）写回武器的 .tres。
 @export_tool_button("写回武器 .tres") var save_action = _save_to_weapon
 
 @onready var hold_pivot: Node2D = $HoldPivot
@@ -37,8 +41,6 @@ func _apply() -> void:
 		return
 	hold_sprite.texture = weapon.hold_texture
 	hold_sprite.rotation = -weapon.hold_angle
-	if weapon.hold_texture != null:
-		hold_sprite.offset = Vector2(0, weapon.hold_texture.get_height() / 2.0).rotated(weapon.hold_angle)
 	if weapon.hit_offset != _seen_offset:
 		_seen_offset = weapon.hit_offset
 		hit_shape.position = weapon.hit_offset

@@ -9,6 +9,7 @@ const SCALE_HOVER   := Vector2(1.09, 1.09)     # 悬停：放大 12%
 const SCALE_PRESSED := Vector2(0.94, 0.94)     # 按下：缩到 94%
 const SCALE_TIME    := 0.08                    # 过渡时长（秒）
 
+## 点这个按钮要开关哪个面板（在检查器里把面板节点拖进来）。
 @export var target_panel: PanelBase
 
 var _scale_tween: Tween

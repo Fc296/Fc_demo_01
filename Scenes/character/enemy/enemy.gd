@@ -6,11 +6,16 @@ class_name Enemy
 ## 不同"性格"靠换状态节点组合，不加 if 分支。完整说明见《脚本说明.md》→ Scenes/character/enemy/enemy.gd
 
 ## ——— 接口清单（待实现）———
-@export var detect_range: float = 160.0     # 多远开始追
-@export var attack_range: float = 24.0      # 多近开始打
-@export var lose_sight_time: float = 2.0    # 丢失目标后放弃追击的秒数
+## 玩家进入这个距离（像素）就开始追。
+@export var detect_range: float = 160.0
+## 进入这个距离（像素）就开始攻击。
+@export var attack_range: float = 24.0
+## 跟丢目标后，过多少秒放弃追击回 idle。
+@export var lose_sight_time: float = 2.0
+## 死亡掉落表（.tres）。留空 = 不掉任何东西。
 @export var loot_table: LootTable
-@export_range(0.0, 3.0, 0.05) var attack_rest: float = 0.4   # 挥完动画后还要喘多久
+## 挥完一整个攻击动画后还要"喘"多久（秒）。总攻击间隔 = 动画长度 + 它。
+@export_range(0.0, 3.0, 0.05) var attack_rest: float = 0.4
 
 var _next_attack_at: int = 0                                  # 毫秒时间戳
 

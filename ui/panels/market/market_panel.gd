@@ -4,7 +4,8 @@ class_name MarketPanel
 ## 【UI 层 · 拍卖行面板】卖素材换金币、花金币买素材。
 ## 价格和存量全在 MarketData 里算；这里只负责"显示 + 把买卖串起来"。
 
-@export var tradable_ids: Array[StringName] = []   # 这个市场卖什么（检查器里填）
+## 这个市场上架哪些物品（按物品 id，检查器里填）。
+@export var tradable_ids: Array[StringName] = []
 
 @onready var market_list: ItemList = %MarketList
 @onready var info_label: Label = %InfoLabel

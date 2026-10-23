@@ -9,10 +9,14 @@ class_name MarketData
 
 enum Result { OK, NO_ITEM, NOT_TRADABLE, LACK_ITEM, LACK_GOLD, BAG_FULL }
 
-@export var base_stock: int = 20          # 基准存量（系数为 1 时的存量）
-@export var min_rate: float = 0.5         # 价格系数下限
-@export var max_rate: float = 1.5         # 价格系数上限
-@export var fee_rate: float = 0.05        # 手续费（卖出时扣）
+## 基准存量：市场里有这么多时，价格系数 = 1。
+@export var base_stock: int = 20
+## 价格系数下限（存量再多也不会更便宜）。
+@export var min_rate: float = 0.5
+## 价格系数上限（存量再少也不会更贵）。
+@export var max_rate: float = 1.5
+## 卖出时扣的手续费比例（0.05 = 5%）。
+@export var fee_rate: float = 0.05
 
 var stock: Dictionary = {}                # id → 市场存量（运行时数据，不填检查器）
 

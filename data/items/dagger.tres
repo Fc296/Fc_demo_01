@@ -18,7 +18,6 @@ element = 3
 element_amount = 3.0
 knockback = 3.0
 hold_texture = ExtResource("1_jpf71")
-hold_orbit = Vector2(9, 6)
 equip_type = 8
 bonus_damage = 5.0
 bonus_health_regen = 2.0

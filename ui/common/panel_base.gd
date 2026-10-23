@@ -8,7 +8,8 @@ signal closed
 
 #const DRAG_KEEP_VISIBLE := 24.0        # 拖动时至少留这么多像素在屏幕里
 
-@export var header: PanelHeader        # 检查器里拖：本面板的标题栏
+## 本面板的标题栏节点（检查器里拖）：负责关闭按钮和拖动。
+@export var header: PanelHeader
 
 
 func _ready() -> void:

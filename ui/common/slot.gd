@@ -13,6 +13,7 @@ class_name Slot
 @onready var icon_rect: TextureRect = $Icon
 @onready var count_label: Label = $Count
 
+## 这个格子在自己容器里的序号（-1 = 还没绑定；由 set_source() 设置）。
 @export var slot_index: int = -1
 
 var _index: int = -1                       # 私有：只由 set_source() 改，别在外面赋值

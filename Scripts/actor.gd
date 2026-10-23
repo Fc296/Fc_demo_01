@@ -14,21 +14,34 @@ class_name Actor
 signal died                                        # 一对一，留在本类
 #
 ## ── 基础值（天生，检查器里调；怪物也靠它）──
+## 基础生命上限。玩家填 0（数值全部来自 PlayerStats）；怪物填具体值。
 @export var base_max_health: float = 10.0
-@export var base_max_mana: float = 0.0             # 0 = 没有蓝条
+## 基础法力上限。0 = 这个角色没有蓝条。
+@export var base_max_mana: float = 0.0
+## 基础移动速度（像素/秒）。
 @export var base_move_speed: float = 120.0
-@export var base_attack: float = 0.0               # 玩家填 0（靠三围），怪物填具体值
+## 基础攻击力。玩家填 0（靠三围成长）；怪物填具体值。
+@export var base_attack: float = 0.0
+## 基础防御力。只减物理伤害，不减元素伤害。
 @export var base_defense: float = 0.0
-@export var idle_state: StringName = &"idle"       # 受击/攻击后回到哪个状态
+## 攻击 / 受击结束后回到哪个状态。怪可以改成 &"chase" 直接继续追。
+@export var idle_state: StringName = &"idle"
+## 自身元素（光 / 岩 / 风）。它决定别人打你时的克制关系；NONE = 无属性。
 @export var element: Element.Type = Element.Type.NONE
+## 光抗性（%）。结算时夹在 -50 ~ +75 之间（负数 = 易伤）。
 @export var base_resist_light: float = 0.0
+## 岩抗性（%）。结算时夹在 -50 ~ +75 之间（负数 = 易伤）。
 @export var base_resist_rock: float = 0.0
+## 风抗性（%）。结算时夹在 -50 ~ +75 之间（负数 = 易伤）。
 @export var base_resist_wind: float = 0.0
+## 全局伤害减免（%）：物理和元素都吃，最多 50。
 @export var base_damage_reduction: float = 0.0
-@export var base_hit_offset: Vector2 = Vector2(0, 0)   # 判定框往前伸多远（下=0 约定）。故意默认 0：漏填的怪判定框会盖在身上，一眼看得出
+## 判定框沿攻击方向往前伸多远（"下=0"约定）。故意默认 0：漏填的怪判定框会盖在身上，一眼看得出。
+@export var base_hit_offset: Vector2 = Vector2(0, 0)
 ## 这只角色"攻击打到第几帧"（0 = 抬手那一帧）。怪在检查器里调；玩家用不到（玩家的前摇由武器给）
 @export_range(0, 8, 1) var base_attack_hit_frame: int = 1
-@export var two_way_body: bool = false       # true = 身体只有左右两套帧（玩家）；怪还是四方向
+## true = 身体只有左右两套帧（玩家）；false = 四方向（普通怪）。
+@export var two_way_body: bool = false
 
 ## ── 运行期状态 ──
 var last_facing: String = "right"            # 视觉用的水平朝向（只记左右）

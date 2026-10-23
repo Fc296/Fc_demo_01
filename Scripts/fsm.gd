@@ -12,7 +12,9 @@ class_name FSM
 ## ——— 接口清单（待实现）———
 signal state_changed(from_state: StringName, to_state: StringName)
 
+## 状态机启动后先进哪个状态（名字 = 子节点名）。
 @export var initial_state: StringName = &"idle"
+## 打开后每次切换状态都会打印一行（调试用）。
 @export var debug_print: bool = false
 
 var actor: Actor          # 由宿主的 _ready 显式赋值

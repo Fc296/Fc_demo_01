@@ -8,11 +8,16 @@ class_name RecipeData
 ##   4. 配方分类 / 分页：加 category 字段，面板按它过滤
 ##   铁律：**判定写在 check()、执行写在 craft()、显示交给面板**
 
-@export var result: ItemBase                      # 产出什么
-@export var result_count: int = 1                 # 产出几个
-@export var material_ids: Array[StringName] = []  # 需要哪些素材（按 id）
-@export var material_counts: Array[int] = []      # 各需要几个（和上面一一对应）
-@export var gold_cost: int = 0                    # 消耗多少金币（先留 0）
+## 打造产出什么（成品物品资源）。
+@export var result: ItemBase
+## 一次产出几个。
+@export var result_count: int = 1
+## 需要哪些素材（按物品 id，和 material_counts 一一对应）。
+@export var material_ids: Array[StringName] = []
+## 每种素材各需要几个（和 material_ids 一一对应）。
+@export var material_counts: Array[int] = []
+## 打造消耗多少金币（0 = 免费）。
+@export var gold_cost: int = 0
 
 enum Result { OK, NO_RESULT, LACK_MATERIAL, LACK_GOLD, BAG_FULL }
 
