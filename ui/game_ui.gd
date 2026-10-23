@@ -1,11 +1,12 @@
 extends CanvasLayer
 
 ## 【UI 层 · 界面总管】所有面板的开关只有这一个入口。
-## 规则：
-##   1）菜单面板互斥：背包 / 装备 / 属性 / 锻造 / 拍卖 / 存档 同时只开一个；
-##   2）箱子例外：箱子和背包成对显示；换到别的面板时两个一起关；
-##   3）ESC 关掉所有面板；I 键不接（10-23 决定去掉）；
-##   4）有面板打开时广播 on_ui_blocking_changed(true) —— 玩家移动 ×0.4、不能攻击。
+## 规则（10-23 改版）：
+##   1）面板可以同时开多个（像桌面窗口）；点按钮只开关它自己，不影响别人；
+##   2）ESC 只关"最后操作的那一个"—— 开面板、或点面板里的任何地方，都会把它记成最后操作，
+##      并提到最上层（视觉上也能看出 ESC 会关谁）；
+##   3）点箱子 = 箱子 + 背包一起开（换东西两边都要看得见）；关箱子不强制关背包；
+##   4）只要有任意面板开着，就广播 on_ui_blocking_changed(true) —— 玩家移动 ×0.4、不能攻击。
 ## 面板自己不知道这些规则；按钮也只知道"我想开哪个"，由这里决定。
 
 @onready var bag_panel: ContainerPanel = %Conta_Panel
@@ -16,15 +17,15 @@ extends CanvasLayer
 @onready var save_panel: SavePanel = %Save_Panel
 @onready var chest_panel: ContainerPanel = %Chest_Panel
 
-var _current: PanelBase = null      # 当前打开的"菜单面板"；箱子模式下为 null
-var _blocked := false               # 上一次广播出去的状态（只在变化时广播）
+var _recent: Array[PanelBase] = []   # 最近操作顺序：末尾 = 最后操作（ESC 关它）
+var _blocked := false                # 上一次广播出去的状态（只在变化时广播）
 
 
 func _ready() -> void:
 	add_to_group(&"game_ui")
 	equip_panel.open(GameData.equipment)
 	bag_panel.open(GameData.inventory)      # 绑容器 + 建格子，只做一次
-	for p in [chest_panel, bag_panel, equip_panel, stats_panel, craft_panel, market_panel, save_panel]:
+	for p in _all_panels():
 		p.hide()
 		p.closed.connect(_on_panel_closed.bind(p))   # 标题栏的叉 / 代码 close() 都会走这里
 
@@ -33,50 +34,65 @@ func _ready() -> void:
 func open_panel(p: PanelBase) -> void:
 	if p == null:
 		return
-	if chest_panel.visible:
-		chest_panel.close()                 # 换到菜单面板 → 箱子模式退出（背包由 closed 处理器收起）
 	if p.visible:
 		p.close()                           # 再点一次同一个按钮 = 关
 		return
-	if _current != null and _current != p:
-		_current.close()
-	_current = p
 	p.show()
+	_touch(p)
 	_apply_blocking()
 
 
-## 箱子开口：箱子 + 背包成对显示；菜单面板先收起
+## 箱子开口：箱子 + 背包一起显示（别的面板不受影响）
 func open_chest(target: InventoryData) -> ContainerPanel:
-	if _current != null:
-		var p := _current
-		_current = null                     # 先清，避免 closed 处理器再把它当成"当前面板"
-		p.close()
 	chest_panel.open(target)
-	bag_panel.show()
+	if not bag_panel.visible:
+		bag_panel.show()
+		_touch(bag_panel)                   # 背包是"顺带打开的"
+	_touch(chest_panel)                     # 按 E 这次操作的是箱子 → ESC 先关箱子
 	_apply_blocking()
 	return chest_panel
 
 
-## ESC：关掉所有面板（箱子 + 背包一起关）
+## 全部关掉（目前只有调试 / 换场景用；ESC 走 _close_last）
 func close_all() -> void:
-	if chest_panel.visible:
-		chest_panel.close()                 # 它的 closed 处理器会顺手把背包收起
-	if _current != null:
-		var p := _current
-		_current = null
-		p.close()
+	for p in _all_panels():
+		if p.visible:
+			p.close()
+	_recent.clear()
 	_apply_blocking()
 
 
 func is_any_panel_open() -> bool:
-	return _current != null or chest_panel.visible
+	for p in _all_panels():
+		if p.visible:
+			return true
+	return false
+
+
+## ESC：只关最后操作的那一个；没有面板时什么也不做
+func _close_last() -> void:
+	while not _recent.is_empty():
+		var p: PanelBase = _recent.pop_back()
+		if p.visible:
+			p.close()
+			_apply_blocking()
+			return
+	_apply_blocking()                       # 栈里剩下都是已经关掉的 → 刷新一次状态
+
+
+## 记成"最后操作"，并提到最上层（画在同一层的面板靠 tree 顺序决定谁在上）
+func _touch(p: PanelBase) -> void:
+	if p == null or not p.visible:
+		return
+	_recent.erase(p)
+	_recent.append(p)
+	var parent := p.get_parent()
+	if parent != null:
+		parent.move_child(p, -1)
 
 
 func _on_panel_closed(p: PanelBase) -> void:
-	if p == chest_panel:
-		bag_panel.hide()                    # 箱子关了 → 配对的背包也收
-	elif p == _current:
-		_current = null
+	_recent.erase(p)
 	_apply_blocking()
 
 
@@ -89,8 +105,24 @@ func _apply_blocking() -> void:
 	EventBus.on_ui_blocking_changed.emit(blocked)
 
 
+## 鼠标按在哪个面板里，就把哪个记成"最后操作"。
+## 不用 gui_input：按钮会把点击吃掉；这里从"悬停的控件"往上找最近的 PanelBase。
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		var c := get_viewport().gui_get_hovered_control()
+		while c != null:
+			if c is PanelBase:
+				_touch(c)
+				return
+			c = c.get_parent() as Control
+
+
 ## ESC 是 Godot 内置动作（ui_cancel），不用自己在输入映射里配
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and is_any_panel_open():
-		close_all()
+		_close_last()
 		get_viewport().set_input_as_handled()
+
+
+func _all_panels() -> Array:
+	return [bag_panel, equip_panel, stats_panel, craft_panel, market_panel, save_panel, chest_panel]
