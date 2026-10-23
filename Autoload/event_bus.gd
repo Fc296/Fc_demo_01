@@ -24,6 +24,7 @@ signal on_actor_died(actor: Actor)
 signal on_gold_changed(current: int, change: int)   # current = 现在有多少（界面直接显示）；change = 这次增减多少（飘字/音效/统计）  # 只要其中一个时，另一个写 0
 signal on_hint_requested(text: String)          # 弹一句提示（HUD 负责显示）
 signal on_damage_dealt(target: Actor, value: float)   # 谁挨了多少（伤害数字 / 受击反馈）
+signal on_ui_blocking_changed(blocked: bool)    # 有面板打开 = true：玩家移动 ×0.4、不能攻击
 # signal on_game_saved
 # signal on_game_loaded
 # signal on_mana_changed(actor: Actor, current: float, maximum: float)

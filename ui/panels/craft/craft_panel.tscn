@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://srr4yfmggfjj" path="res://ui/panels/craft/craft_panel.gd" id="1_87o36"]
 [ext_resource type="PackedScene" uid="uid://d0wbsgbymykye" path="res://ui/common/panel_header.tscn" id="4_x5q0a"]
+[ext_resource type="PackedScene" path="res://ui/common/coin_label.tscn" id="5_coin"]
 
 [node name="CraftPanel" type="PanelContainer" unique_id=768032468 node_paths=PackedStringArray("header")]
 script = ExtResource("1_87o36")
@@ -26,6 +27,9 @@ custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1609294220]
+layout_mode = 2
+
+[node name="CoinLabel" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("5_coin")]
 layout_mode = 2
 
 [node name="NeedLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=881176181]

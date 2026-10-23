@@ -13,6 +13,7 @@ class_name Player
 @onready var weapon_sprite: Sprite2D = %WeaponSprite
 @onready var hand_pivot: Node2D = %HandPivot
 @export var hold_orbit := Vector2(9.0, 6.0)   # 武器绕角色转的椭圆：x = 左右半轴，y = 上下半轴
+const UI_MOVE_SCALE := 0.4                    # 面板打开时的移动倍率（"边走边翻背包"）
 
 var spawn_pos: Vector2 = Vector2.ZERO      # 出生点，复活用
 var weapon_locked := false
@@ -21,6 +22,7 @@ var weapon_locked := false
 func _ready() -> void:
 	spawn_pos = global_position            # 必须在 _apply_saved_position() 之前记！
 	add_to_group(&"player")          # 主角只此一只，用组标记身份
+	EventBus.on_ui_blocking_changed.connect(_on_ui_blocking_changed)
 	stats = GameData.player_stats
 	super()
 	died.connect(_on_died)
@@ -65,6 +67,13 @@ func _apply_saved_position() -> void:      # 读档后：站回存档点
 
 func _on_died() -> void:
 	fsm.transition_to(&"dead")
+
+
+## 面板开合（GameUi 广播）：移动降到 40%、禁攻击；走路动画一起放慢，否则会出现"脚在走、身体在滑"。
+func _on_ui_blocking_changed(blocked: bool) -> void:
+	move_speed_scale = UI_MOVE_SCALE if blocked else 1.0
+	attack_enabled = not blocked
+	anim_sprite.speed_scale = move_speed_scale
 
 
 

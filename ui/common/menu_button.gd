@@ -21,14 +21,20 @@ func _ready() -> void:
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
 
+	# target_panel 是检查器里拖的引用：漏拖时按钮会静默没反应，开局就喊一声
+	if target_panel == null:
+		push_warning("菜单按钮没绑定面板：%s" % name)
+
 	# 缩放必须以"按钮中心"为基准，否则会往右下角长
 	_center_pivot()
 	resized.connect(_center_pivot)
 
 
 func _on_pressed() -> void:
-	if target_panel != null:
-		target_panel.toggle_visible()
+	# 自己不判断开/关 —— 互斥、箱子例外、ESC 都在 GameUi 一处管
+	var ui := get_tree().get_first_node_in_group(&"game_ui")
+	if ui != null and target_panel != null:
+		ui.open_panel(target_panel)
 
 
 func _center_pivot() -> void:

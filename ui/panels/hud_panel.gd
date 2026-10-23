@@ -10,14 +10,12 @@ const DAMAGE_NUMBER := preload("res://ui/effects/damage_number.tscn")
 
 @onready var hp_bar: ProgressBar = %HpBar
 @onready var hp_label: Label = %HpLabel
-@onready var coin_label: Label = %CoinLabel
 @onready var hint_label: Label = %HintLabel
 
 var _hint_id: int = 0                       # 当前显示的是第几条提示
 
 func _ready() -> void:
 	EventBus.on_health_changed.connect(_on_health_changed)
-	EventBus.on_gold_changed.connect(_on_gold_changed)
 	EventBus.on_hint_requested.connect(_on_hint_requested)
 	EventBus.on_damage_dealt.connect(_on_damage_dealt)
 	hint_label.hide()                        # 开局不显示
@@ -26,8 +24,6 @@ func _ready() -> void:
 	var player := get_tree().get_first_node_in_group(&"player") as Actor
 	if player != null:
 		_on_health_changed(player, player.health, player.max_health())
-		# 信号只在"变化时"发，所以进场先自己拉一次
-	_on_gold_changed(GameData.player_stats.gold if GameData.player_stats else 0, 0)
 
 
 func _on_health_changed(who: Actor, current: float, maximum: float) -> void:
@@ -37,10 +33,6 @@ func _on_health_changed(who: Actor, current: float, maximum: float) -> void:
 	hp_bar.max_value = maximum
 	hp_bar.value = current
 	hp_label.text = "%d / %d" % [roundi(current), roundi(maximum)]
-
-
-func _on_gold_changed(current: int, change: int) -> void:
-	coin_label.text = "金币 %d" % current
 
 
 func _on_hint_requested(text: String) -> void:

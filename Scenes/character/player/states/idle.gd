@@ -18,5 +18,5 @@ func update(delta: float):
 
 
 func handle_input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
+	if event.is_action_pressed("attack") and actor.attack_enabled:
 		fsm.transition_to(&"attack")

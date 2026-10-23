@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsgh6nftiwyvw" path="res://ui/panels/market/market_panel.gd" id="1_qt8mr"]
 [ext_resource type="PackedScene" uid="uid://d0wbsgbymykye" path="res://ui/common/panel_header.tscn" id="2_ykn1t"]
+[ext_resource type="PackedScene" path="res://ui/common/coin_label.tscn" id="3_coin"]
 
 [node name="MarketPanel" type="PanelContainer" unique_id=937725243 node_paths=PackedStringArray("header")]
 script = ExtResource("1_qt8mr")
@@ -26,6 +27,9 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="HBox" type="HBoxContainer" parent="Margin/VBox" unique_id=589918044]
+layout_mode = 2
+
+[node name="CoinLabel" parent="Margin/VBox/HBox" instance=ExtResource("3_coin")]
 layout_mode = 2
 
 [node name="InfoLabel" type="Label" parent="Margin/VBox/HBox" unique_id=2576386]

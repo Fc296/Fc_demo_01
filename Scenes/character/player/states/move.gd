@@ -22,11 +22,11 @@ func physics_update(delta: float):
 	actor.play_anim(&"walk")
 	# 获取移动速度数值
 	var spd:float = actor.move_speed()
-	actor.velocity = input_dir * spd
+	actor.velocity = input_dir * spd * actor.move_speed_scale   # 面板打开时 ×0.4
 	# 物理帧执行移动，只调用一次move_and_slide
 	actor.move_and_slide()
 
 
 func handle_input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
+	if event.is_action_pressed("attack") and actor.attack_enabled:
 		fsm.transition_to(&"attack")

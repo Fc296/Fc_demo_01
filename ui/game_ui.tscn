@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://m5a3dsp3c47p" path="res://ui/panels/market/market_panel.tscn" id="14_85ca7"]
 [ext_resource type="Script" uid="uid://cx55y8mn882cu" path="res://ui/common/drag_hand.gd" id="18_ydwuc"]
 [ext_resource type="PackedScene" uid="uid://lcubfdoabtil" path="res://ui/panels/save/save_panel.tscn" id="19_jwl6g"]
+[ext_resource type="PackedScene" path="res://ui/common/coin_label.tscn" id="20_coin"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0e3nr"]
 font_size = 10
@@ -69,7 +70,7 @@ offset_right = 252.0
 offset_bottom = 20.0
 label_settings = SubResource("LabelSettings_0e3nr")
 
-[node name="CoinLabel" type="Label" parent="HudPanel" unique_id=913482438]
+[node name="CoinLabel" parent="HudPanel" unique_id=913482438 instance=ExtResource("20_coin")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0

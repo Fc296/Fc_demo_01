@@ -36,6 +36,8 @@ var stats: PlayerStats = null                      # 玩家的成长数据；怪
 var health: float = 0.0
 var mana: float = 0.0
 var last_dir: String = "down"
+var move_speed_scale: float = 1.0       # 临时减速倍率：UI 面板打开时 0.4（以后的体力系统也能复用）
+var attack_enabled: bool = true         # false = 不响应攻击输入（UI 面板打开时）
 @onready var anim_sprite: AnimatedSprite2D = $AnimSprite
 @onready var fsm: FSM = $FSM
 

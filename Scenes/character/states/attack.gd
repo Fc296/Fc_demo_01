@@ -68,7 +68,7 @@ func physics_update(delta: float) -> void:
 		if dir.is_zero_approx():
 			actor.velocity = Vector2.ZERO
 		else:
-			actor.velocity = dir * actor.move_speed() * _move_scale
+			actor.velocity = dir * actor.move_speed() * _move_scale * actor.move_speed_scale
 			actor.move_and_slide()
 	else:
 		actor.velocity = Vector2.ZERO        # 怪 / 空手：站桩
